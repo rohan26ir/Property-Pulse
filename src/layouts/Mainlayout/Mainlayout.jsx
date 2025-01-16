@@ -9,7 +9,7 @@ const Mainlayout = () => {
       <header>
         <Navbar></Navbar>
       </header>
-      <main className='w-11/12 mx-auto'>
+      <main className='w-11/12 mx-auto h-screen'>
         <Outlet></Outlet>
       </main>
       <footer>

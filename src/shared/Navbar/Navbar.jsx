@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const Navbar = () => {
   const navMenu = (
@@ -21,12 +21,12 @@ const Navbar = () => {
         <NavLink to={'/'}>Home</NavLink>
       </li>
       <li>
-        <NavLink to={'/'}>Home</NavLink>
+        <NavLink to={'/'}>Dashboard</NavLink>
       </li>
     </>
   );
 
-  const [showDocs, setShowDocs] = useState(true); // Default to false
+  const [showDocs, setShowDocs] = useState(true);
 
   return (
     <div className="navbar bg-base-300">
@@ -49,9 +49,9 @@ const Navbar = () => {
         )}
         </div>
 
-        <a className="btn btn-ghost text-xl" href="#home">
-          PropertyPulse
-        </a>
+        <Link to={'/'} className="btn btn-ghost text-xl" href="#home">
+          <img className="h-10 rounded-full" src="/favicon.png" alt="" /> PropertyPulse
+        </Link>
       </div>
       {/* Navbar Center */}
       <div className="navbar-center hidden md:flex">

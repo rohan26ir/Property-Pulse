@@ -70,7 +70,7 @@ const Hero = () => {
   ];
 
   return (
-    <div>
+    <div className=''>
       <div>
         <Swiper
           spaceBetween={30}

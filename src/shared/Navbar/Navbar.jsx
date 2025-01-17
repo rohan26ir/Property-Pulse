@@ -12,7 +12,7 @@ const Navbar = () => {
         <NavLink to={'/'}>Apartment</NavLink>
       </li>
       <li>
-        <NavLink to={'/'}>Home</NavLink>
+        <NavLink to={'/'}>Announcements</NavLink>
       </li>
       <li>
         <NavLink to={'/'}>Home</NavLink>
@@ -82,9 +82,9 @@ const Navbar = () => {
           </button>
           <div
             tabIndex={0}
-            className="dropdown-content card card-compact bg-base-100 z-[1] mt-3 w-52 shadow"
+            className="dropdown-content card card-compact bg-base-100 z-50 mt-3 w-52 shadow"
           >
-            <div className="card-body">
+            <div className="card-body ">
               <span className="text-lg font-bold">8 Items</span>
               <span className="text-info">Subtotal: $999</span>
               <div className="card-actions">
@@ -105,7 +105,7 @@ const Navbar = () => {
           </button>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+            className="menu menu-sm dropdown-content bg-base-100 rounded-box mt-3 w-52 p-2 shadow  z-40"
           >
             <li>
               <a className="justify-between">

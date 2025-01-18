@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const SignIn = () => {
   return (
@@ -73,9 +74,9 @@ const SignIn = () => {
         </form>
         <p className="text-sm text-gray-600 text-center mt-4">
           Don't have an account?{" "}
-          <a href="#" className="text-blue-500 hover:underline">
+          <Link to={'/signup'} className="text-blue-500 hover:underline">
             Sign Up
-          </a>
+          </Link>
         </p>
       </motion.div>
     </div>

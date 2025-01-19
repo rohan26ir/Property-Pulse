@@ -1,8 +1,16 @@
-import React, { useState } from "react";
+import { button } from "motion/react-client";
+import React, { useContext, useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { Link, NavLink } from "react-router-dom";
+import { AuthContext } from "../../Provider/Provider";
 
 const Navbar = () => {
+
+  const {user} = useContext(AuthContext);
+
+  console.log(user);
+
+
   const navMenu = (
     <>
       <li>
@@ -49,9 +57,13 @@ const Navbar = () => {
         )}
         </div>
 
-        <Link to={'/'} className="btn btn-ghost text-xl" href="#home">
+        {user ? (<Link to={'/'} className="btn btn-ghost text-xl" href="#home">
           <img className="h-10 rounded-full" src="/favicon.png" alt="" /> PropertyPulse
-        </Link>
+        </Link>) : "User Not Login "}
+
+        {
+          user ? (<p>{user.displayName}</p>) : "not ok"
+        }
       </div>
       {/* Navbar Center */}
       <div className="navbar-center hidden md:flex">
@@ -94,7 +106,9 @@ const Navbar = () => {
           </div>
         </div>
         {/* User Dropdown */}
-        <div className="dropdown dropdown-end">
+        <div className="dropdown dropdown-end flex items-center gap-3">
+          
+          <div>
           <button tabIndex={0} className="btn btn-ghost btn-circle avatar">
             <div className="w-10 rounded-full">
               <img
@@ -120,6 +134,12 @@ const Navbar = () => {
               <a>Logout</a>
             </li>
           </ul>
+          </div>
+
+          <div>
+            {user ? <button>Sign out</button> : <Link to={'/signin'}><button>Sign in</button></Link>}
+          </div>
+
         </div>
       </div>
     </div>

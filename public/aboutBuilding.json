@@ -1,0 +1,170 @@
+[
+  {
+    "_id": "642c155b2c4774f05c36eeaa",
+    "name": "Skyline Heights",
+    "description": "Skyline Heights is a luxurious and eco-friendly apartment complex located in the heart of the city, offering state-of-the-art facilities.",
+    "location": {
+      "address": "123 Skyline Avenue, Downtown City",
+      "city": "Metropolis",
+      "state": "Urbania",
+      "postalCode": "56789",
+      "country": "Wonderland"
+    },
+    "features": [
+      "24/7 Security",
+      "Gymnasium",
+      "Rooftop Garden",
+      "High-speed Elevators",
+      "Covered Parking"
+    ],
+    "imageGallery": [
+      "https://i.ibb.co.com/2FNGv8C/1.webp",
+      "https://example.com/images/skyline2.jpg",
+      "https://example.com/images/skyline3.jpg"
+    ],
+    "contactDetails": {
+      "phone": "+1234567890",
+      "email": "contact@skylineheights.com"
+    }
+  },
+  {
+    "_id": "642c155b2c4774f05c36eebb",
+    "name": "Emerald Residences",
+    "description": "Emerald Residences is a tranquil haven with spacious apartments, designed for comfort and elegance.",
+    "location": {
+      "address": "45 Emerald Lane, Uptown",
+      "city": "Metropolis",
+      "state": "Urbania",
+      "postalCode": "56800",
+      "country": "Wonderland"
+    },
+    "features": [
+      "Swimming Pool",
+      "Children's Play Area",
+      "Jogging Track",
+      "Visitor Parking",
+      "Backup Power Supply"
+    ],
+    "imageGallery": [
+      "https://i.ibb.co.com/f8gJWWV/2.webp",
+      "https://example.com/images/emerald2.jpg",
+      "https://example.com/images/emerald3.jpg"
+    ],
+    "contactDetails": {
+      "phone": "+1234567891",
+      "email": "info@emeraldresidences.com"
+    }
+  },
+  {
+    "_id": "642c155b2c4774f05c36eecc",
+    "name": "Ocean View Apartments",
+    "description": "Located near the coast, Ocean View Apartments offers breathtaking sea views and modern conveniences.",
+    "location": {
+      "address": "78 Ocean Drive, Seaside",
+      "city": "Metropolis",
+      "state": "Urbania",
+      "postalCode": "56900",
+      "country": "Wonderland"
+    },
+    "features": [
+      "Sea-facing Balconies",
+      "Infinity Pool",
+      "Pet-friendly",
+      "Open-air Cafeteria",
+      "Smart Home Systems"
+    ],
+    "imageGallery": [
+      "https://i.ibb.co.com/4t7X1TS/3.jpg",
+      "https://example.com/images/oceanview2.jpg",
+      "https://example.com/images/oceanview3.jpg"
+    ],
+    "contactDetails": {
+      "phone": "+1234567892",
+      "email": "support@oceanview.com"
+    }
+  },
+  {
+    "_id": "642c155b2c4774f05c36eedd",
+    "name": "Pearl Towers",
+    "description": "Pearl Towers is a contemporary residential complex offering premium apartments with stunning city views.",
+    "location": {
+      "address": "89 Pearl Street, Central District",
+      "city": "Metropolis",
+      "state": "Urbania",
+      "postalCode": "57000",
+      "country": "Wonderland"
+    },
+    "features": [
+      "Sky Lounges",
+      "Fitness Center",
+      "Conference Room",
+      "On-site Maintenance",
+      "EV Charging Stations"
+    ],
+    "imageGallery": [
+      "https://i.ibb.co.com/2740WT4/4.webp",
+      "https://example.com/images/pearl2.jpg",
+      "https://example.com/images/pearl3.jpg"
+    ],
+    "contactDetails": {
+      "phone": "+1234567893",
+      "email": "pearl@towerresidences.com"
+    }
+  },
+  {
+    "_id": "642c155b2c4774f05c36eeee",
+    "name": "Golden Arcadia",
+    "description": "Golden Arcadia combines traditional elegance with modern luxury, ideal for families and professionals.",
+    "location": {
+      "address": "12 Arcadia Way, Golden Valley",
+      "city": "Metropolis",
+      "state": "Urbania",
+      "postalCode": "57100",
+      "country": "Wonderland"
+    },
+    "features": [
+      "Large Courtyards",
+      "Private Playgrounds",
+      "Sauna and Spa",
+      "Library and Reading Room",
+      "24/7 Concierge Service"
+    ],
+    "imageGallery": [
+      "https://i.ibb.co.com/FhK9v3M/5.webp",
+      "https://example.com/images/golden2.jpg",
+      "https://example.com/images/golden3.jpg"
+    ],
+    "contactDetails": {
+      "phone": "+1234567894",
+      "email": "golden@arcadia.com"
+    }
+  },
+  {
+    "_id": "642c155b2c4774f05c36eeff",
+    "name": "Crystal Heights",
+    "description": "Crystal Heights features modern design and upscale amenities for urban living at its best.",
+    "location": {
+      "address": "100 Crystal Avenue, Innovation Park",
+      "city": "Metropolis",
+      "state": "Urbania",
+      "postalCode": "57200",
+      "country": "Wonderland"
+    },
+    "features": [
+      "Glass-fronted Balconies",
+      "Community Events Space",
+      "Premium Flooring",
+      "Fiber-optic Internet",
+      "Green Energy Solutions"
+    ],
+    "imageGallery": [
+      "https://i.ibb.co.com/56jj2Wc/6.webp",
+      "https://example.com/images/crystal2.jpg",
+      "https://example.com/images/crystal3.jpg"
+    ],
+    "contactDetails": {
+      "phone": "+1234567895",
+      "email": "crystal@heights.com"
+    }
+  }
+]

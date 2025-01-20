@@ -9,7 +9,7 @@ const Mainlayout = () => {
       <header className='z-30'>
         <Navbar></Navbar>
       </header>
-      <main className='h-screen'>
+      <main className=''>
         <Outlet></Outlet>
       </main>
       <footer>

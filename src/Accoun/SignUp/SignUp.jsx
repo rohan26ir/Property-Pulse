@@ -14,42 +14,28 @@ const SignUp = () => {
 
   const handleSignUp = async (e) => {
     e.preventDefault();
-
+  
     const form = e.target;
     const name = form.name.value;
     const photo = form.photoUrl.value;
     const email = form.email.value;
     const password = form.password.value;
-
-    const passwordValidation = validatePassword(password);
-    if (passwordValidation) {
-      setPasswordError(passwordValidation);
-      return;
-    }
-    setPasswordError("");
-
-    if (!name || !photo || !email || !password) {
-      return Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "All fields are required!",
-      });
-    }
-
+  
     try {
       const user = await createNewUser(email, password, name, photo);
       console.log("Signed-up user:", user);
-
+  
       Swal.fire({
-        position: "top-start",
+        position: "top-center",
         icon: "success",
         title: `Welcome, ${name}!`,
         showConfirmButton: false,
         timer: 1500,
       });
-
+  
       navigate("/");
     } catch (error) {
+      console.error("Error during signup:", error.message);
       Swal.fire({
         icon: "error",
         title: "Error",
@@ -57,6 +43,7 @@ const SignUp = () => {
       });
     }
   };
+  
 
   const handleSignInGoogle = async () => {
     try {

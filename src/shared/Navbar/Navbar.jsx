@@ -113,7 +113,7 @@ const Navbar = () => {
             <div className="w-10 rounded-full">
               <img
                 alt="User Avatar"
-                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                src={user.photoURL}
               />
             </div>
           </button>
@@ -137,7 +137,7 @@ const Navbar = () => {
           </div>
 
           <div>
-            {user ? <button>Sign out</button> : <Link to={'/signin'}><button>Sign in</button></Link>}
+            {!user &&  <Link to={'/signin'}><button>Sign in</button></Link>}
           </div>
 
         </div>

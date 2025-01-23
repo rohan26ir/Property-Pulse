@@ -14,10 +14,10 @@ const Navbar = () => {
         <NavLink to={"/"}>Home</NavLink>
       </li>
       <li>
-        <NavLink to={"/"}>Apartment</NavLink>
+        <NavLink to={"/apartment"}>Apartment</NavLink>
       </li>
       <li>
-        <NavLink to={"/"}>Notices</NavLink>
+        <NavLink to={"/notice"}>Notices</NavLink>
       </li>
     </>
   );

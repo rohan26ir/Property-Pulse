@@ -21,7 +21,7 @@ const Provider = ({ children }) => {
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  console.log("User state:", JSON.stringify(user, null, 2));
+  // console.log("User state:", JSON.stringify(user, null, 2));
 
   // Create new user
   const createNewUser = (email, password, name, photoUrl) => {

@@ -3,25 +3,35 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import Swal from "sweetalert2";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import { motion } from "framer-motion"; // Importing Framer Motion
+import { motion } from "framer-motion";
 import { AuthContext } from "../../Provider/Provider";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [passwordError, setPasswordError] = useState("");
   const { createNewUser, setUser, signInWithGoogle } = useContext(AuthContext);
+  const axiosPublic = useAxiosPublic();
   const navigate = useNavigate();
   const location = useLocation();
 
   const handleSignUp = async (e) => {
     e.preventDefault();
     const form = e.target;
-    const name = form.name.value;
-    const photo = form.photoUrl.value;
-    const email = form.email.value;
+    const name = form.name.value.trim();
+    const photo = form.photoUrl.value.trim();
+    const email = form.email.value.trim();
     const password = form.password.value;
 
+    // Password validation
+    if (password.length < 6) {
+      setPasswordError("Password must be at least 6 characters.");
+      return;
+    }
+    setPasswordError("");
+
     try {
+      // Create new user with Firebase/Auth system
       const user = await createNewUser(email, password, name, photo);
       Swal.fire({
         position: "top-center",
@@ -30,7 +40,27 @@ const SignUp = () => {
         showConfirmButton: false,
         timer: 1500,
       });
-      navigate("/");
+
+      // Save user to the database
+      const userInfo = {
+        name,
+        email,
+        photoURL: photo,
+      };
+
+      const response = await axiosPublic.post("/users", userInfo);
+
+      if (response.data.insertedId) {
+        console.log("User added to the database");
+        form.reset(); // Reset form fields
+        navigate("/");
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Failed to add user to the database.",
+        });
+      }
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -46,15 +76,24 @@ const SignUp = () => {
       const user = result.user;
       setUser(user);
 
-      Swal.fire({
-        position: "top-center",
-        icon: "success",
-        title: `Welcome, ${user.displayName || "User"}!`,
-        showConfirmButton: false,
-        timer: 1500,
-      });
+      // Save Google user to the database
+      const userInfo = {
+        name: user.displayName,
+        email: user.email,
+        photoURL: user.photoURL,
+      };
 
-      navigate(location.state?.from || "/");
+      const response = await axiosPublic.post("/users", userInfo);
+      if (response.data.insertedId || response.data.message === "user already exists") {
+        Swal.fire({
+          position: "top-center",
+          icon: "success",
+          title: `Welcome, ${user.displayName || "User"}!`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate(location.state?.from || "/");
+      }
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -86,55 +125,45 @@ const SignUp = () => {
           Sign Up for an Account
         </motion.h2>
 
-        <form
-          onSubmit={handleSignUp}
-          className="card-body px-3 py-4"
-          initial={{ y: 30, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.4 }}
-        >
+        <form onSubmit={handleSignUp} className="card-body px-3 py-4">
           <div className="form-control">
             <label className="label">Your Name</label>
-            <motion.input
+            <input
               type="text"
               name="name"
               placeholder="Enter your name"
               className="input input-bordered focus:outline-none"
               required
-              whileFocus={{ scale: 1.03 }}
             />
           </div>
           <div className="form-control">
             <label className="label">Photo URL</label>
-            <motion.input
+            <input
               type="text"
               name="photoUrl"
               placeholder="Enter your photo URL"
               className="input input-bordered focus:outline-none"
               required
-              whileFocus={{ scale: 1.03 }}
             />
           </div>
           <div className="form-control">
             <label className="label">Email</label>
-            <motion.input
+            <input
               type="email"
               name="email"
               placeholder="Enter your email"
               className="input input-bordered focus:outline-none"
               required
-              whileFocus={{ scale: 1.03 }}
             />
           </div>
           <div className="form-control relative">
             <label className="label">Password</label>
-            <motion.input
+            <input
               type={showPassword ? "text" : "password"}
               name="password"
               placeholder="Enter your password"
               className="input input-bordered focus:outline-none"
               required
-              whileFocus={{ scale: 1.03 }}
             />
             <div
               onClick={() => setShowPassword(!showPassword)}
@@ -151,8 +180,6 @@ const SignUp = () => {
           <motion.button
             type="submit"
             className="btn bg-blue-500 text-white w-full py-2 mt-4 rounded-lg hover:bg-blue-600 transition"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
           >
             Sign Up
           </motion.button>
@@ -165,8 +192,6 @@ const SignUp = () => {
           <motion.button
             onClick={handleSignInGoogle}
             className="btn bg-gray-100 flex items-center justify-center w-full py-2 mt-2 rounded-lg hover:bg-gray-200 transition"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
             aria-label="Sign in with Google"
           >
             <FcGoogle className="mr-2" /> Log in with Google

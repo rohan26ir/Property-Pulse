@@ -13,7 +13,7 @@ const Dashboard = () => {
       <main>
         <div className='flex gap-2'>
           <div className='w-[25%] '><DbNavbar></DbNavbar></div>
-          <div className=''><Outlet></Outlet></div>
+          <div className='m-auto'><Outlet></Outlet></div>
         </div>
       </main>
       <footer>

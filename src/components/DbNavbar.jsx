@@ -1,35 +1,36 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const DbNavbar = () => {
+  const userMenu = (
+      <>
+        <li>
+          <NavLink to={"/dashboard/my-profile"}>My Profile</NavLink>
+        </li>
+        <li>
+          <NavLink to={"/dashboard/agrement"}>Agrement</NavLink>
+        </li>
+        <li>
+          <NavLink to={"/make-payment"}>Make payment</NavLink>
+        </li>
+        <li>
+          <NavLink to={"/payment-history"}>Payment History</NavLink>
+        </li>
+        <li>
+          <NavLink to={"/apartment"}>Announcements</NavLink>
+        </li>
+      </>
+    );
   return (
     <div>
       <div className="flex flex-col gap-2 bg-gray-500 bg-opacity-30 shadow-2xl p-5">
         <div>
           <h2 className="text-2xl font-bold">User DashBoard</h2>
-          <ul>
-            <Link to={"/dashboard/myprofile"}>
-              <li>My Profile</li>
-            </Link>
-            <Link>
-              <li>Announcements</li>
-            </Link>
-          </ul>
 
-          <ul>
-            <Link to={"/dashboard/agrement"}>
-              <li>Agrement</li>
-            </Link>
-            <Link>
-              <li></li>
-            </Link>
-            <Link>
-              <li></li>
-            </Link>
-            <Link>
-              <li></li>
-            </Link>
+          <ul className="menu menu-verticle px-1 gap-1">
+            {userMenu}
           </ul>
+          
           
         </div>
         <div></div>

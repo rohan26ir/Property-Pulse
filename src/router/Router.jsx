@@ -45,7 +45,7 @@ const Router = createBrowserRouter([
         element: <Agrement></Agrement>
       },
       {
-        path: 'myprofile',
+        path: '/dashboard/my-profile',
         element: <MyProfile></MyProfile>
       }
   ]

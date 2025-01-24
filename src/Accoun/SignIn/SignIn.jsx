@@ -83,7 +83,7 @@ const SignIn = () => {
 
     setTimeout(() => {
       navigate(location?.state || "/");
-    }, 1600);
+    }, 1800);
   };
 
   const handleError = (error) => {

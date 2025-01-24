@@ -8,6 +8,9 @@ import SignIn from "../Accoun/SignIn/SignIn";
 import SignUp from "../Accoun/SignUp/SignUp";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import Apartment from "../pages/Apartment/Apartment";
+import Dashboard from "../layouts/Dashboard/Dashboard";
+import Agrement from "../layouts/Dashboard/Agrement/Agrement";
+import MyProfile from "../layouts/Dashboard/UserDashboard/MyProfile";
 
 const Router = createBrowserRouter([
   {
@@ -33,6 +36,20 @@ const Router = createBrowserRouter([
       }
     ]
   },
+  {
+    path: 'dashboard',
+    element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
+    children: [ 
+      {
+        path: 'agrement',      
+        element: <Agrement></Agrement>
+      },
+      {
+        path: 'myprofile',
+        element: <MyProfile></MyProfile>
+      }
+  ]
+  }
 ]);
 
 

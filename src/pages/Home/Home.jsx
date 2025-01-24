@@ -2,8 +2,13 @@ import React from 'react';
 import Hero from './Hero';
 import AboutBuilding from './AboutBuilding/AboutBuilding';
 import Coupons from './Coupons/Coupons';
+import useAuth from '../../hooks/useAuth';
+import { AuthContext } from '../../Provider/Provider';
 
 const Home = () => {
+
+  const { user } = useAuth(AuthContext);
+  
   return (
     <div className=''>
       <header>
@@ -15,7 +20,9 @@ const Home = () => {
          <AboutBuilding></AboutBuilding>
         </div>
         <div>
-          <Coupons></Coupons>
+          {
+            user ? <Coupons></Coupons> : ''
+          }
         </div>
       </main>
     </div>

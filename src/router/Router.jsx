@@ -6,13 +6,14 @@ import Error from "../pages/Error/Error";
 import Home from "../pages/Home/Home";
 import SignIn from "../Accoun/SignIn/SignIn";
 import SignUp from "../Accoun/SignUp/SignUp";
-import PrivateRoute from "../PrivateRoute/PrivateRoute";
+import PrivateRoute from "./PrivateRoute/PrivateRoute";
 import Apartment from "../pages/Apartment/Apartment";
 import Dashboard from "../layouts/Dashboard/Dashboard";
 import Agrement from "../layouts/Dashboard/Agrement/Agrement";
 import MyProfile from "../layouts/Dashboard/UserDashboard/MyProfile";
 import Announcements from "../layouts/Dashboard/UserDashboard/Announcements/Announcements";
 import AllUsers from "../layouts/Dashboard/UserDashboard/AllUsers/AllUsers";
+import AdminRoute from "./AdminRoute/AdminRoute";
 
 const Router = createBrowserRouter([
   {

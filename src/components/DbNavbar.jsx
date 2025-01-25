@@ -1,24 +1,28 @@
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import useAdmin from "../hooks/useAdmin";
 
 const DbNavbar = () => {
+  const [isAdmin] = useAdmin(); 
+
   const userMenu = (
     <>
       <li>
-        <NavLink to={"/dashboard/all-users"}>AllUsers</NavLink>
+        <NavLink to={"/dashboard/all-users"}>All Users</NavLink>
       </li>
     </>
   );
+
   const memberMenu = (
     <>
       <li>
         <NavLink to={"/dashboard/my-profile"}>My Profile</NavLink>
       </li>
       <li>
-        <NavLink to={"/dashboard/agrement"}>Agrement</NavLink>
+        <NavLink to={"/dashboard/agreement"}>Agreement</NavLink>
       </li>
       <li>
-        <NavLink to={"/make-payment"}>Make payment</NavLink>
+        <NavLink to={"/make-payment"}>Make Payment</NavLink>
       </li>
       <li>
         <NavLink to={"/payment-history"}>Payment History</NavLink>
@@ -28,26 +32,17 @@ const DbNavbar = () => {
       </li>
     </>
   );
+
   return (
     <div>
-      <div className="flex flex-col gap-2  p-5">
+      <div className="flex flex-col gap-4 p-5">
         <div>
-          <h2 className="text-2xl font-bold">User DashBoard</h2>
-
-          <ul className="menu menu-verticle px-1 gap-1">{userMenu}</ul>
-        </div>
-        <div>
-          <h2 className="text-2xl font-bold">Member DashBoard</h2>
-
-          <ul className="menu menu-verticle px-1 gap-1">
-            {memberMenu}
+          <h2 className="text-2xl font-bold">Dashboard</h2>
+          <ul className="menu menu-vertical px-1 gap-1">
+            {/* Conditional render the menu based on isAdmin */}
+            {isAdmin ? userMenu : memberMenu}
           </ul>
         </div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
       </div>
     </div>
   );

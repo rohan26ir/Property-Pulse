@@ -11,6 +11,7 @@ import Apartment from "../pages/Apartment/Apartment";
 import Dashboard from "../layouts/Dashboard/Dashboard";
 import Agrement from "../layouts/Dashboard/Agrement/Agrement";
 import MyProfile from "../layouts/Dashboard/UserDashboard/MyProfile";
+import Announcements from "../layouts/Dashboard/UserDashboard/Announcements/Announcements";
 
 const Router = createBrowserRouter([
   {
@@ -47,6 +48,10 @@ const Router = createBrowserRouter([
       {
         path: '/dashboard/my-profile',
         element: <MyProfile></MyProfile>
+      },
+      {
+        path: '/dashboard/announcements',
+        element: <Announcements></Announcements>
       }
   ]
   }

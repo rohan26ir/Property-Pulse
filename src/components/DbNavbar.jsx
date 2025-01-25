@@ -17,7 +17,7 @@ const DbNavbar = () => {
           <NavLink to={"/payment-history"}>Payment History</NavLink>
         </li>
         <li>
-          <NavLink to={"/apartment"}>Announcements</NavLink>
+          <NavLink to={"/dashboard/announcements"}>Announcements</NavLink>
         </li>
       </>
     );
@@ -30,7 +30,7 @@ const DbNavbar = () => {
           <ul className="menu menu-verticle px-1 gap-1">
             {userMenu}
           </ul>
-          
+
           
         </div>
         <div></div>

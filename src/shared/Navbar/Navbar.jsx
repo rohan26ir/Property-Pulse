@@ -7,6 +7,7 @@ import { FaRegCircleUser } from "react-icons/fa6";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
+  
 
   const navMenu = (
     <>

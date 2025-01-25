@@ -46,6 +46,7 @@ const SignIn = () => {
         name: user.displayName,
         email: user.email,
         photoURL: user.photoURL,
+        role: "member",
       };
 
       const response = await axiosPublic.post("/users", userInfo);

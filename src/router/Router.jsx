@@ -12,6 +12,7 @@ import Dashboard from "../layouts/Dashboard/Dashboard";
 import Agrement from "../layouts/Dashboard/Agrement/Agrement";
 import MyProfile from "../layouts/Dashboard/UserDashboard/MyProfile";
 import Announcements from "../layouts/Dashboard/UserDashboard/Announcements/Announcements";
+import AllUsers from "../layouts/Dashboard/UserDashboard/AllUsers/AllUsers";
 
 const Router = createBrowserRouter([
   {
@@ -52,6 +53,10 @@ const Router = createBrowserRouter([
       {
         path: '/dashboard/announcements',
         element: <Announcements></Announcements>
+      },
+      {
+        path: "/dashboard/all-users",
+        element: <AllUsers></AllUsers>
       }
   ]
   }

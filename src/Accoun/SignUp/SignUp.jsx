@@ -46,6 +46,7 @@ const SignUp = () => {
         name,
         email,
         photoURL: photo,
+        role: "member",
       };
 
       const response = await axiosPublic.post("/users", userInfo);

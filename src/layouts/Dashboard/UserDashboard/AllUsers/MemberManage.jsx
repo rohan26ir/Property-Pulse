@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { FaTrashAlt, FaUsers } from "react-icons/fa";
+import { FaUsers } from "react-icons/fa";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import useRole from "../../../../hooks/useRole";
@@ -57,17 +57,17 @@ const MemberManage = () => {
 
   // Count users based on roles
   const adminCount = users.filter((user) => user.role === "admin").length;
-  const residentCount = users.filter(
-    (user) => user.role === "member" || !user.role
-  ).length;
+  const memberCount = users.filter((user) => user.role === "member").length;
+  const noRoleCount = users.filter((user) => !user.role).length;
 
   return (
     <div className="p-5 bg-gray-50 min-h-screen">
       <div className="mb-6">
         <h2 className="text-3xl font-semibold">Building Management Users</h2>
         <p className="mt-2 text-gray-600">
-          Total Residents: <strong>{residentCount}</strong> | Managers:{" "}
-          <strong>{adminCount}</strong>
+          Total Residents: <strong>{memberCount}</strong> | Managers:{" "}
+          <strong>{adminCount}</strong> | Users with no role:{" "}
+          <strong>{noRoleCount}</strong>
         </p>
       </div>
 
@@ -105,13 +105,18 @@ const MemberManage = () => {
                 </button>
               )}
 
-              <button
-                onClick={() => handleMakeMember(user)}
-                className="bg-red-500 text-white rounded-full py-1 px-3 text-sm"
-              >
-                <FaTrashAlt className="inline-block mr-2" />
-                Change to Member
-              </button>
+              {user.role === "member" ? (
+                <span className="bg-gray-400 text-white rounded-full py-1 px-3 text-sm">
+                  Resident
+                </span>
+              ) : (
+                <button
+                  onClick={() => handleMakeMember(user)}
+                  className="bg-red-500 text-white rounded-full py-1 px-3 text-sm"
+                >
+                  Change to Resident
+                </button>
+              )}
             </div>
           </div>
         ))}

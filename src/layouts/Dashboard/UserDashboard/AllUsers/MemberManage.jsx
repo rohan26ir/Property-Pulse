@@ -1,6 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
-import { FaUsers } from "react-icons/fa";
-import Swal from "sweetalert2";
+import { FaUsers, FaUserAlt, FaUserShield } from "react-icons/fa";
+import { MdPersonAddAlt1 } from "react-icons/md";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { motion } from "framer-motion";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import useRole from "../../../../hooks/useRole";
 
@@ -19,37 +22,19 @@ const MemberManage = () => {
     axiosSecure.patch(`/users/admin/${user._id}`).then((res) => {
       if (res.data.modifiedCount > 0) {
         refetch();
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: `${user.name} is now a Building Manager!`,
-          showConfirmButton: false,
-          timer: 1500,
+        toast.success(`${user.name} is now a Building Manager!`, {
+          position: "top-right",
         });
       }
     });
   };
 
   const handleMakeMember = (user) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "This will change the user's role to member.",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, change role!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        axiosSecure.patch(`/users/member/${user._id}`).then((res) => {
-          if (res.data.success) {
-            refetch();
-            Swal.fire({
-              title: "Updated!",
-              text: `${user.name}'s role has been changed to member.`,
-              icon: "success",
-            });
-          }
+    axiosSecure.patch(`/users/member/${user._id}`).then((res) => {
+      if (res.data.success) {
+        refetch();
+        toast.success(`${user.name}'s role has been changed to Resident.`, {
+          position: "top-right",
         });
       }
     });
@@ -66,15 +51,18 @@ const MemberManage = () => {
         <h2 className="text-3xl font-semibold">Building Management Users</h2>
         <p className="mt-2 text-gray-600">
           Total Residents: <strong>{memberCount}</strong> | Managers:{" "}
-          <strong>{adminCount}</strong> | Users with no role:{" "}
+          <strong>{adminCount}</strong> | Tenant:{" "}
           <strong>{noRoleCount}</strong>
         </p>
       </div>
 
       <div className="space-y-4">
         {users.map((user) => (
-          <div
+          <motion.div
             key={user._id}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
             className="w-full bg-white shadow-md rounded-lg p-4 flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-6"
           >
             <div className="w-24 h-24 rounded-full bg-gray-200 flex-shrink-0 overflow-hidden">
@@ -90,35 +78,38 @@ const MemberManage = () => {
               <p>{user.email}</p>
             </div>
 
-            <div className="flex space-x-4">
+            <div className="flex flex-col space-y-2">
               {user.role === "admin" ? (
-                <span className="bg-green-500 text-white py-1 px-3 rounded-full text-sm">
+                <span className="bg-green-500 text-white py-1 px-3 rounded-full text-sm text-center flex items-center justify-center">
+                  <FaUserShield className="mr-2" />
                   Building Manager
                 </span>
               ) : (
                 <button
                   onClick={() => handleMakeAdmin(user)}
-                  className="bg-orange-500 text-white rounded-full py-1 px-3 text-sm"
+                  className="bg-orange-500 text-white rounded-full py-1 px-3 text-sm flex items-center justify-center"
                 >
-                  <FaUsers className="inline-block mr-2" />
+                  <MdPersonAddAlt1 className="mr-2" />
                   Promote to Manager
                 </button>
               )}
 
               {user.role === "member" ? (
-                <span className="bg-gray-400 text-white rounded-full py-1 px-3 text-sm">
+                <span className="bg-blue-400 text-white py-1 px-3 rounded-full text-sm text-center flex items-center justify-center">
+                  <FaUserAlt className="mr-2" />
                   Resident
                 </span>
               ) : (
                 <button
                   onClick={() => handleMakeMember(user)}
-                  className="bg-red-500 text-white rounded-full py-1 px-3 text-sm"
+                  className="bg-red-500 text-white rounded-full py-1 px-3 text-sm flex items-center justify-center"
                 >
+                  <FaUsers className="mr-2" />
                   Change to Resident
                 </button>
               )}
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
     </div>

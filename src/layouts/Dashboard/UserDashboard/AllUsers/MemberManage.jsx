@@ -2,9 +2,11 @@ import { useQuery } from "@tanstack/react-query";
 import { FaTrashAlt, FaUsers } from "react-icons/fa";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
+import useRole from "../../../../hooks/useRole";
 
 const MemberManage = () => {
   const axiosSecure = useAxiosSecure();
+  const { role } = useRole(); // Get the current user's role
   const { data: users = [], refetch } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
@@ -28,7 +30,7 @@ const MemberManage = () => {
     });
   };
 
-  const handleDeleteUser = (user) => {
+  const handleMakeMember = (user) => {
     Swal.fire({
       title: "Are you sure?",
       text: "This will change the user's role to member.",
@@ -39,8 +41,8 @@ const MemberManage = () => {
       confirmButtonText: "Yes, change role!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axiosSecure.delete(`/users/${user._id}`).then((res) => {
-          if (res.data.message === "User role updated to member successfully") {
+        axiosSecure.patch(`/users/member/${user._id}`).then((res) => {
+          if (res.data.success) {
             refetch();
             Swal.fire({
               title: "Updated!",
@@ -104,7 +106,7 @@ const MemberManage = () => {
               )}
 
               <button
-                onClick={() => handleDeleteUser(user)}
+                onClick={() => handleMakeMember(user)}
                 className="bg-red-500 text-white rounded-full py-1 px-3 text-sm"
               >
                 <FaTrashAlt className="inline-block mr-2" />

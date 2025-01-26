@@ -12,8 +12,9 @@ import Dashboard from "../layouts/Dashboard/Dashboard";
 import Agrement from "../layouts/Dashboard/Agrement/Agrement";
 import MyProfile from "../layouts/Dashboard/UserDashboard/MyProfile";
 import Announcements from "../layouts/Dashboard/UserDashboard/Announcements/Announcements";
-import AllUsers from "../layouts/Dashboard/UserDashboard/AllUsers/AllUsers";
 import AdminRoute from "./AdminRoute/AdminRoute";
+import AdminProfile from "../pages/Admin/AdminProfile";
+import MemberManage from "../layouts/Dashboard/UserDashboard/AllUsers/MemberManage";
 
 const Router = createBrowserRouter([
   {
@@ -56,8 +57,12 @@ const Router = createBrowserRouter([
         element: <Announcements></Announcements>
       },
       {
-        path: "/dashboard/all-users",
-        element: <AdminRoute><AllUsers></AllUsers></AdminRoute>
+        path: "/dashboard/MemberManage",
+        element: <AdminRoute><MemberManage></MemberManage></AdminRoute>
+      },
+      {
+        path: "/dashboard/admin-profile",
+        element: <AdminRoute><AdminProfile></AdminProfile></AdminRoute>
       }
   ]
   }

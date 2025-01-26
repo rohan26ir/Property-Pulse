@@ -4,10 +4,18 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../Provider/Provider";
 import { FaRegCircleUser } from "react-icons/fa6";
+import useAdmin from "../../hooks/useAdmin";
+import useMember from "../../hooks/useMember";
+import useRole from "../../hooks/useRole";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
-  
+  const [isAdmin] = useAdmin(); 
+  const [isMember] = useMember(); 
+  const { role } = useRole();
+
+  console.log("isRole", role);
+
 
   const navMenu = (
     <>
@@ -109,16 +117,16 @@ const Navbar = () => {
               </button>
               <ul
                 tabIndex={0}
-                className="menu menu-sm dropdown-content bg-base-100 rounded-box mt-3 w-52 p-2 shadow  z-40"
+                className="menu menu-sm dropdown-content bg-base-100 rounded-box mt-3 w-60 p-2 shadow space-y-3  z-40"
               >
                 <li>
                   <a className="justify-between">
                     {user ? `${user.displayName}` : 'username'}
-                    <span className="badge text-orange-500">user</span>
+                    <span className="badge text-orange-500"> {role} </span>
                   </a>
                 </li>
-                <li>
-                  <Link to={'/dashboard/my-profile'}>Dashboard</Link>
+                <li className="font-bold">
+                  <Link to={`${!isAdmin ? "/dashboard/my-profile" : "/dashboard/all-users"}`}>Dashboard</Link>
                 </li>
                 <li>
                   {user ? (

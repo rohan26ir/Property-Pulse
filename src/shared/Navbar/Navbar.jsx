@@ -10,12 +10,11 @@ import useRole from "../../hooks/useRole";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
-  const [isAdmin] = useAdmin(); 
-  const [isMember] = useMember(); 
+  const [isAdmin] = useAdmin();
+  const [isMember] = useMember();
   const { role } = useRole();
 
   console.log("isRole", role);
-
 
   const navMenu = (
     <>
@@ -121,13 +120,24 @@ const Navbar = () => {
               >
                 <li>
                   <a className="justify-between">
-                    {user ? `${user.displayName}` : 'username'}
+                    {user ? `${user.displayName}` : "username"}
                     <span className="badge text-orange-500"> {role} </span>
                   </a>
                 </li>
                 <li className="font-bold">
-                  <Link to={`${!isAdmin ? "/dashboard/my-profile" : "/dashboard/all-users"}`}>Dashboard</Link>
+                  <Link
+                    to={
+                      role === "Manager"
+                        ? "/dashboard/admin-profile"
+                        : role === "Resident" || role === "Tenant"
+                        ? "/dashboard/my-profile"
+                        : "/"
+                    }
+                  >
+                    Dashboard
+                  </Link>
                 </li>
+
                 <li>
                   {user ? (
                     <button

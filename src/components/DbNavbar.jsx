@@ -1,13 +1,11 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import useAdmin from "../hooks/useAdmin";
-import useMember from "../hooks/useMember";
+import useRole from "../hooks/useRole";
 
 const DbNavbar = () => {
-  const [isAdmin] = useAdmin(); 
-  const [isMember] = useMember();
+  const { role } = useRole(); // Get the current user's role
 
-  const userMenu = (
+  const adminMenu = (
     <>
       <li>
         <NavLink to={"/dashboard/admin-profile"}>Admin Profile</NavLink>
@@ -33,6 +31,17 @@ const DbNavbar = () => {
         <NavLink to={"/dashboard/my-profile"}>My Profile</NavLink>
       </li>
       <li>
+        <NavLink to={"/dashboard/announcements"}>Announcements</NavLink>
+      </li>
+    </>
+  );
+
+  const userMenu = (
+    <>
+      <li>
+        <NavLink to={"/dashboard/my-profile"}>My Profile</NavLink>
+      </li>
+      <li>
         <NavLink to={"/dashboard/agreement"}>Agreement</NavLink>
       </li>
       <li>
@@ -51,10 +60,12 @@ const DbNavbar = () => {
     <div>
       <div className="flex flex-col gap-4 p-5">
         <div>
-          <h2 className="text-2xl font-bold">Dashboard  {isAdmin && "Admin"}{isMember && "Member"}</h2>
+          <h2 className="text-2xl font-bold">{role} Dashboard</h2>
           <ul className="menu menu-vertical px-1 gap-1">
-            {/* Conditional render the menu based on isAdmin */}
-            {isAdmin ? userMenu : memberMenu}
+            {/* Render menu based on role */}
+            {role === "Manager" && adminMenu}
+            {role === "Resident" && memberMenu}
+            {role === "Tenant" && userMenu}
           </ul>
         </div>
       </div>

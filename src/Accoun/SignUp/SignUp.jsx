@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import Swal from "sweetalert2";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
@@ -7,23 +7,24 @@ import { motion } from "framer-motion";
 import { AuthContext } from "../../Provider/Provider";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 
+const imageHostingKey = import.meta.env.VITE_IMAGE_HOSTING_KEY;
+const imageHostingAPI = `https://api.imgbb.com/1/upload?key=${imageHostingKey}`;
+
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [passwordError, setPasswordError] = useState("");
-  const { createNewUser, setUser, signInWithGoogle } = useContext(AuthContext);
+  const { createNewUser, signInWithGoogle } = useContext(AuthContext);
   const axiosPublic = useAxiosPublic();
   const navigate = useNavigate();
-  const location = useLocation();
 
   const handleSignUp = async (e) => {
     e.preventDefault();
     const form = e.target;
     const name = form.name.value.trim();
-    const photo = form.photoUrl.value.trim();
+    const photo = form.photo.files[0];
     const email = form.email.value.trim();
     const password = form.password.value;
 
-    // Password validation
     if (password.length < 6) {
       setPasswordError("Password must be at least 6 characters.");
       return;
@@ -31,36 +32,35 @@ const SignUp = () => {
     setPasswordError("");
 
     try {
-      // Create new user with Firebase/Auth system
-      const user = await createNewUser(email, password, name, photo);
-      Swal.fire({
-        position: "top-center",
-        icon: "success",
-        title: `Welcome, ${name}!`,
-        showConfirmButton: false,
-        timer: 1500,
-      });
+      // Upload photo to ImgBB
+      const imageData = new FormData();
+      imageData.append("image", photo);
+      const imageRes = await axiosPublic.post(imageHostingAPI, imageData);
 
-      // Save user to the database
-      const userInfo = {
-        name,
-        email,
-        photoURL: photo,
-        role: "member",
-      };
+      if (imageRes.data.success) {
+        const photoURL = imageRes.data.data.display_url;
 
-      const response = await axiosPublic.post("/users", userInfo);
+        // Create user with Firebase/Auth system
+        await createNewUser(email, password, name, photoURL);
 
-      if (response.data.insertedId) {
-        console.log("User added to the database");
-        form.reset(); // Reset form fields
-        navigate("/");
+        // Save user to the database
+        const userInfo = { name, email, photoURL };
+        const response = await axiosPublic.post("/users", userInfo);
+
+        if (response.data.success) {
+          Swal.fire({
+            icon: "success",
+            title: "Account created successfully!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          form.reset();
+          navigate("/");
+        } else {
+          throw new Error("Failed to save user to the database.");
+        }
       } else {
-        Swal.fire({
-          icon: "error",
-          title: "Error",
-          text: "Failed to add user to the database.",
-        });
+        throw new Error("Failed to upload image.");
       }
     } catch (error) {
       Swal.fire({
@@ -73,33 +73,13 @@ const SignUp = () => {
 
   const handleSignInGoogle = async () => {
     try {
-      const result = await signInWithGoogle();
-      const user = result.user;
-      setUser(user);
-
-      // Save Google user to the database
-      const userInfo = {
-        name: user.displayName,
-        email: user.email,
-        photoURL: user.photoURL,
-      };
-
-      const response = await axiosPublic.post("/users", userInfo);
-      if (response.data.insertedId || response.data.message === "user already exists") {
-        Swal.fire({
-          position: "top-center",
-          icon: "success",
-          title: `Welcome, ${user.displayName || "User"}!`,
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        navigate(location.state?.from || "/");
-      }
+      await signInWithGoogle();
+      navigate("/");
     } catch (error) {
       Swal.fire({
         icon: "error",
         title: "Error",
-        text: error.message,
+        text: "Google sign-in failed.",
       });
     }
   };
@@ -109,13 +89,11 @@ const SignUp = () => {
       className="py-5 flex justify-center items-center bg-gradient-to-br from-gray-200 via-gray-100 to-white"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
     >
       <motion.div
         className="relative w-full max-w-md p-6 bg-white shadow-xl rounded-lg border"
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 0.5, ease: "easeInOut" }}
       >
         <motion.h2
           className="text-center text-2xl font-bold mx-auto p-2 border-b-[1px] border-gray-500 w-[80%] text-[#000000]"
@@ -138,12 +116,11 @@ const SignUp = () => {
             />
           </div>
           <div className="form-control">
-            <label className="label">Photo URL</label>
+            <label className="label">Photo</label>
             <input
-              type="text"
-              name="photoUrl"
-              placeholder="Enter your photo URL"
-              className="input input-bordered focus:outline-none"
+              type="file"
+              name="photo"
+              className="file-input file-input-bordered w-full max-w-xs"
               required
             />
           </div>

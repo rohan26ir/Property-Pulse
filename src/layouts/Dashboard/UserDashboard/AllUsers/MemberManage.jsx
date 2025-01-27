@@ -50,8 +50,8 @@ const MemberManage = () => {
       <div className="mb-6">
         <h2 className="text-3xl font-semibold">Building Management Users</h2>
         <p className="mt-2 text-gray-600">
-          Total Residents: <strong>{memberCount}</strong> | Managers:{" "}
-          <strong>{adminCount}</strong> | Tenant:{" "}
+          <span title="Members">Total Residents</span>: <strong>{memberCount}</strong> | <span title="Admins">Managers</span>:{" "}
+          <strong>{adminCount}</strong> | <span title="Users">Tenants</span>:{" "}
           <strong>{noRoleCount}</strong>
         </p>
       </div>

@@ -59,22 +59,23 @@ const Apartment = () => {
         showConfirmButton: false,
         timer: 1500,
       });
-      navigate("/login");
+      navigate("/signin");
       return;
     }
 
+    // Agreement data to be stored
     const agreementData = {
       userId: user._id,
       userEmail: user.email,
-      userName: user.name,
+      userName: user.displayName, // Store user name
       apartmentId: apartment._id,
       apartmentImage: apartment.image,
-      floorNo: apartment.floorNo,
-      blockName: apartment.blockName,
-      apartmentNo: apartment.apartmentNo,
-      rent: apartment.rent,
-      status: "pending",
-      createdAt: new Date(),
+      floorNo: apartment.floorNo, // Store floor number
+      blockName: apartment.blockName, // Store block name
+      apartmentNo: apartment.apartmentNo, // Store apartment room number
+      rent: apartment.rent, // Store rent
+      status: "pending", // Initial status set as pending
+      agreementRequestDate: new Date().toISOString(), // Store agreement request date
     };
 
     try {

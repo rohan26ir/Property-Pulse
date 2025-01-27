@@ -1,116 +1,107 @@
-import { useQuery } from "@tanstack/react-query";
-import { FaUsers, FaUserAlt, FaUserShield } from "react-icons/fa";
-import { MdPersonAddAlt1 } from "react-icons/md";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { motion } from "framer-motion";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
-import useRole from "../../../../hooks/useRole";
 
 const MemberManage = () => {
+  const [users, setUsers] = useState([]);
   const axiosSecure = useAxiosSecure();
-  const { role } = useRole(); // Get the current user's role
-  const { data: users = [], refetch } = useQuery({
-    queryKey: ["users"],
-    queryFn: async () => {
-      const res = await axiosSecure.get("/users");
-      return res.data;
-    },
-  });
 
-  const handleMakeAdmin = (user) => {
-    axiosSecure.patch(`/users/admin/${user._id}`).then((res) => {
-      if (res.data.modifiedCount > 0) {
-        refetch();
-        toast.success(`${user.name} is now a Building Manager!`, {
-          position: "top-right",
-        });
+  // Fetch users from API
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const res = await axiosSecure.get("/users");
+        setUsers(res.data);
+      } catch (error) {
+        console.error("Error fetching users:", error);
       }
-    });
-  };
+    };
+    fetchUsers();
+  }, [axiosSecure]);
 
-  const handleMakeMember = (user) => {
-    axiosSecure.patch(`/users/member/${user._id}`).then((res) => {
+  const handleMakeMember = async (user) => {
+    try {
+      const res = await axiosSecure.patch(`/users/member/${user._id}`);
       if (res.data.success) {
-        refetch();
+        setUsers((prevUsers) =>
+          prevUsers.map((u) =>
+            u._id === user._id ? { ...u, role: "member" } : u
+          )
+        );
         toast.success(`${user.name}'s role has been changed to Resident.`, {
           position: "top-right",
+          autoClose: 3000,
         });
       }
-    });
+    } catch (error) {
+      toast.error("Failed to update role. Please try again later.", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+      console.error("Error updating role:", error);
+    }
   };
 
-  // Count users based on roles
+  // Calculate totals
   const adminCount = users.filter((user) => user.role === "admin").length;
   const memberCount = users.filter((user) => user.role === "member").length;
-  const noRoleCount = users.filter((user) => !user.role).length;
+  const userCount = users.length - adminCount - memberCount;
 
   return (
     <div className="p-5 bg-gray-50 min-h-screen">
       <div className="mb-6">
-        <h2 className="text-3xl font-semibold">Building Management Users</h2>
+        <h2 className="text-3xl font-semibold">Manage Residents</h2>
         <p className="mt-2 text-gray-600">
-          <span title="Members">Total Residents</span>: <strong>{memberCount}</strong> | <span title="Admins">Managers</span>:{" "}
-          <strong>{adminCount}</strong> | <span title="Users">Tenants</span>:{" "}
-          <strong>{noRoleCount}</strong>
+          Below is the list of all users. You can change their roles as needed.
         </p>
+        <div className="mt-4">
+          <span className="bg-green-200 text-green-800 px-4 py-1 rounded-full text-sm mr-4">
+            Admins: {adminCount}
+          </span>
+          <span className="bg-blue-200 text-blue-800 px-4 py-1 rounded-full text-sm mr-4">
+            Residents: {memberCount}
+          </span>
+          <span className="bg-gray-200 text-gray-800 px-4 py-1 rounded-full text-sm">
+            Users: {userCount}
+          </span>
+        </div>
       </div>
 
-      <div className="space-y-4">
-        {users.map((user) => (
-          <motion.div
-            key={user._id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-            className="w-full bg-white shadow-md rounded-lg p-4 flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-6"
-          >
-            <div className="w-24 h-24 rounded-full bg-gray-200 flex-shrink-0 overflow-hidden">
-              <img
-                src={user.photoURL || "https://via.placeholder.com/150"}
-                alt={user.name}
-                className="w-full h-full object-cover"
-              />
-            </div>
-
-            <div className="flex-1">
-              <h3 className="text-xl font-semibold">{user.name}</h3>
-              <p>{user.email}</p>
-            </div>
-
-            <div className="flex flex-col space-y-2">
-              {user.role === "admin" ? (
-                <span className="bg-green-500 text-white py-1 px-3 rounded-full text-sm text-center flex items-center justify-center">
-                  <FaUserShield className="mr-2" />
-                  Building Manager
-                </span>
-              ) : (
-                <button
-                  onClick={() => handleMakeAdmin(user)}
-                  className="bg-orange-500 text-white rounded-full py-1 px-3 text-sm flex items-center justify-center"
-                >
-                  <MdPersonAddAlt1 className="mr-2" />
-                  Promote to Manager
-                </button>
-              )}
-
-              {user.role === "member" ? (
-                <span className="bg-blue-400 text-white py-1 px-3 rounded-full text-sm text-center flex items-center justify-center">
-                  <FaUserAlt className="mr-2" />
-                  Resident
-                </span>
-              ) : (
-                <button
-                  onClick={() => handleMakeMember(user)}
-                  className="bg-red-500 text-white rounded-full py-1 px-3 text-sm flex items-center justify-center"
-                >
-                  <FaUsers className="mr-2" />
-                  Change to Resident
-                </button>
-              )}
-            </div>
-          </motion.div>
-        ))}
+      <div className="overflow-x-auto bg-white shadow-md rounded-lg">
+        <table className="table-auto w-full text-left border-collapse">
+          <thead>
+            <tr className="bg-gray-200">
+              <th className="px-4 py-2 text-gray-700">Name</th>
+              <th className="px-4 py-2 text-gray-700">Email</th>
+              <th className="px-4 py-2 text-gray-700">Role</th>
+              <th className="px-4 py-2 text-gray-700">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {users.map((user) => (
+              <tr key={user._id} className="border-b">
+                <td className="px-4 py-2">{user.name}</td>
+                <td className="px-4 py-2">{user.email}</td>
+                <td className="px-4 py-2 capitalize">{user.role || "User"}</td>
+                <td className="px-4 py-2">
+                  {user.role === "member" ? (
+                    <span className="bg-blue-500 text-white py-1 px-3 rounded-full text-sm">
+                      Resident
+                    </span>
+                  ) : (
+                    <button
+                      onClick={() => handleMakeMember(user)}
+                      className="bg-green-500 text-white py-1 px-3 rounded-full text-sm hover:bg-green-600"
+                    >
+                      Remove
+                    </button>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );

@@ -126,7 +126,7 @@ const Agreement = () => {
                     <td className="border border-gray-300">{agreement.apartmentNo}</td>
                     <td className="border border-gray-300">${agreement.rent}</td>
                     <td className="border border-gray-300">{agreement.status}</td>
-                    <td className="border border-gray-300">{new Date(agreement.createdAt).toLocaleDateString()}</td>
+                    <td className="border border-gray-300">{new Date(agreement.agreementRequestDate).toLocaleDateString()}</td>
                     <td className="border border-gray-300 text-center">
                       <button
                         onClick={() => handleDelete(agreement._id)}

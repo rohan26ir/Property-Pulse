@@ -40,20 +40,18 @@ const SignIn = () => {
       const result = await signInWithGoogle();
       const user = result.user;
       setUser(user);
-
+  
       // Save Google user to the database
       const userInfo = {
         name: user.displayName,
         email: user.email,
         photoURL: user.photoURL,
-        role: "member",
       };
-
+  
       const response = await axiosPublic.post("/users", userInfo);
-      if (
-        response.data.insertedId ||
-        response.data.message === "user already exists"
-      ) {
+      
+      // Show a success message regardless of whether the user is new or existing
+      if (response.data.success || response.data.message === "user already exists") {
         Swal.fire({
           position: "top-center",
           icon: "success",
@@ -67,10 +65,11 @@ const SignIn = () => {
       Swal.fire({
         icon: "error",
         title: "Error",
-        text: error.message,
+        text: error.response?.data?.message || "Something went wrong",
       });
     }
   };
+  
 
   const handleNavigation = (user, message) => {
     setUser(user);

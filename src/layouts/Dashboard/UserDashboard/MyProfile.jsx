@@ -1,10 +1,12 @@
 import React from 'react';
 import useAuth from '../../../hooks/useAuth';
 import { motion } from "framer-motion";
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
 
 const MyProfile = () => {
   const { user } = useAuth();
   const { displayName, email, photoURL } = user;
+  const axiosSecure = useAxiosSecure();
 
   return (
     <div className="flex items-center justify-center">

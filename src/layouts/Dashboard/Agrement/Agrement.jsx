@@ -44,13 +44,28 @@ const Agreement = () => {
         axiosSecure.delete(`/agreements/${id}`)
           .then((res) => {
             if (res.data.deletedCount > 0) {
+              // Immediately update the state to remove the deleted agreement
               setAgreements(agreements.filter((agreement) => agreement._id !== id));
-              Swal.fire("Deleted!", "Your agreement has been deleted.", "success");
+
+              // Show success toast
+              Swal.fire({
+                icon: 'success',
+                title: 'Deleted!',
+                text: 'Your agreement has been deleted.',
+                timer: 1500, // Auto-close after 1.5 seconds
+                showConfirmButton: false
+              });
             }
           })
           .catch((err) => {
             console.error('Error deleting agreement:', err);
-            Swal.fire("Error!", "Failed to delete agreement.", "error");
+            Swal.fire({
+              icon: 'error',
+              title: 'Error!',
+              text: 'Failed to delete agreement.',
+              timer: 1500,
+              showConfirmButton: false
+            });
           });
       }
     });

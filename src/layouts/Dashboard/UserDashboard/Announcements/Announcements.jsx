@@ -1,59 +1,96 @@
-import React, { useEffect, useState } from "react";
-import Swal from "sweetalert2";
-import useAxiosPublic from "../../../../hooks/useAxiosPublic";
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import useAxiosPublic from '../../../../hooks/useAxiosPublic';
 
 const Announcements = () => {
+  const axiosPublic = useAxiosPublic();
   const [announcements, setAnnouncements] = useState([]);
   const [loading, setLoading] = useState(true);
-  const axiosPublic = useAxiosPublic();
-
-  // Fetch announcements from the server
-  const fetchAnnouncements = async () => {
-    setLoading(true);
-    try {
-      const response = await axiosPublic.get("/announcements");
-      setAnnouncements(response.data);
-      setLoading(false);
-    } catch (error) {
-      console.error("Failed to fetch announcements:", error);
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "Failed to load announcements. Please try again later.",
-      });
-      setLoading(false);
-    }
-  };
+  const [error, setError] = useState(null);
 
   useEffect(() => {
+    const fetchAnnouncements = async () => {
+      try {
+        const response = await axiosPublic.get('/announcements'); // Using axiosPublic hook
+        setAnnouncements(response.data);
+      } catch (err) {
+        console.error('Error fetching announcements:', err);
+        setError('Failed to load announcements.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchAnnouncements();
-  }, []);
+  }, [axiosPublic]);
+
+  if (loading)
+    return (
+      <motion.div
+        className="flex items-center justify-center h-40"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        <p>Loading announcements...</p>
+      </motion.div>
+    );
+
+  if (error)
+    return (
+      <motion.div
+        className="flex items-center justify-center h-40 text-red-500"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        <p>{error}</p>
+      </motion.div>
+    );
 
   return (
-    <div className="w-11/12 mx-auto my-5">
-      <h2 className="text-2xl font-bold text-center mb-4">Announcements</h2>
-
-      {loading ? (
-        <p className="text-center">Loading announcements...</p>
-      ) : announcements.length === 0 ? (
-        <p className="text-center">No announcements available.</p>
+    <motion.div
+      className="p-6 max-w-3xl mx-auto bg-white shadow-lg rounded-lg"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.7 }}
+    >
+      <h1 className="text-2xl font-bold text-center mb-6">Announcements</h1>
+      {announcements.length === 0 ? (
+        <motion.p
+          className="text-center text-gray-500"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          No announcements to display.
+        </motion.p>
       ) : (
-        <div className="flex flex-col space-y-4">
-          {announcements.map((announcement) => (
-            <div
+        <motion.ul
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ staggerChildren: 0.2 }}
+        >
+          {announcements.map((announcement, index) => (
+            <motion.li
               key={announcement._id}
-              className="card shadow-lg border p-4 rounded-lg"
+              className="flex items-start space-x-4 py-4 border-b last:border-b-0"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.4 }}
             >
-              <h3 className="text-lg font-bold">{announcement.title}</h3>
-              <p className="text-gray-600 mt-2">{announcement.description}</p>
-              <p className="text-gray-400 text-sm mt-2">
-                Date: {new Date(announcement.date).toLocaleDateString()}
-              </p>
-            </div>
+              <span className="text-lg font-semibold text-gray-700">
+                {index + 1}.
+              </span>
+              <div>
+                <h2 className="text-lg font-bold">{announcement.title}</h2>
+                <p className="text-gray-600">{announcement.description}</p>
+              </div>
+            </motion.li>
           ))}
-        </div>
+        </motion.ul>
       )}
-    </div>
+    </motion.div>
   );
 };
 

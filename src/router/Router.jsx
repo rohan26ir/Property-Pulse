@@ -18,6 +18,7 @@ import MemberManage from "../layouts/Dashboard/UserDashboard/AllUsers/MemberMana
 import ManageCoupons from "../pages/Admin/ManageCoupons";
 import MakeAnnouncement from "../pages/Admin/MakeAnnouncement";
 import AgreementRequests from "../pages/Admin/AgreementRequests";
+import MemberProfile from "../layouts/Member/MemberProfile";
 
 const Router = createBrowserRouter([
   {
@@ -46,11 +47,16 @@ const Router = createBrowserRouter([
   {
     path: 'dashboard',
     element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
+    errorElement: <Error></Error>,
     children: [ 
       
       {
         path: '/dashboard/my-profile',
         element: <MyProfile></MyProfile>
+      },
+      {
+        path: '/dashboard/member-profile',
+        element: <MemberProfile></MemberProfile>
       },
       {
         path: '/dashboard/agreement',      

@@ -28,7 +28,7 @@ const DbNavbar = () => {
   const memberMenu = (
     <>
       <li>
-        <NavLink to={"/dashboard/my-profile"}>My Profile</NavLink>
+        <NavLink to={"/dashboard/member-profile"}>My Profile</NavLink>
       </li>
       <li>
         <NavLink to={"/dashboard/announcements"}>Announcements</NavLink>

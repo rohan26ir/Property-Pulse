@@ -10,9 +10,9 @@ The client side of PropertyPulse is the front-end interface for users, members, 
 
 ## meaning of user 
 
-user is = Tenant
-member is = Resident
-admin is = Manager
+ - user is = Tenant
+ - member is = Resident
+ - admin is = Manager
 
 ---
 

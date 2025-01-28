@@ -88,6 +88,9 @@ Deployed on Firebase Hosting. Ensure domain is added to Firebase authentication 
 
 ---
 
+Requirement pdf :
+ - https://github.com/Programming-Hero-Web-Course4/b10a12-client-side-rohan26ir/blob/main/assignment12_category_12.pdf
+
 ## Repository Links  
 - [Client Repository](https://github.com/Programming-Hero-Web-Course4/b10a12-client-side-rohan26ir.git)
 

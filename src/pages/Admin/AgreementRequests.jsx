@@ -10,7 +10,11 @@ const AgreementRequests = () => {
     const fetchAgreements = async () => {
       try {
         const response = await axiosSecure.get('/agreements');
-        setAgreements(response.data);
+        // Filter out agreements with status "accepted"
+        const pendingAgreements = response.data.filter(
+          (agreement) => agreement.status !== 'accepted'
+        );
+        setAgreements(pendingAgreements);
       } catch (error) {
         console.error('Error fetching agreements:', error);
       }

@@ -24,12 +24,14 @@ const AdminProfile = () => {
         const totalRooms = apartmentsResponse.data.total || 0;
 
         // Calculate room availability percentages
-        const availableRooms = await axiosSecure.get('/apartment?status=available');
+        const availableRooms = await axiosSecure.get('/agreementsAccep');
         const availableCount = availableRooms.data.apartments.length;
         const unavailableCount = totalRooms - availableCount;
 
         const availablePercentage = ((availableCount / totalRooms) * 100).toFixed(2);
         const unavailablePercentage = ((unavailableCount / totalRooms) * 100).toFixed(2);
+
+        console.log("Available:", availableCount, "Unavailable:", unavailableCount);
 
         // Fetch all users
         const usersResponse = await axiosSecure.get('/users');

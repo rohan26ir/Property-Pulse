@@ -8,6 +8,14 @@ The client side of PropertyPulse is the front-end interface for users, members, 
 
 ---
 
+## meaning of user 
+
+user is = Tenant
+member is = Resident
+admin is = Manager
+
+---
+
 ## Key Features  
 
 1. **Authentication System**  
@@ -81,4 +89,6 @@ Deployed on Firebase Hosting. Ensure domain is added to Firebase authentication 
 ---
 
 ## Repository Links  
-- [Client Repository](https://github.com/rohan26ir/assignment12_category_012_client)
+- [Client Repository](https://github.com/Programming-Hero-Web-Course4/b10a12-client-side-rohan26ir.git)
+
+- [Server Repository](https://github.com/Programming-Hero-Web-Course4/b10a12-server-side-rohan26ir.git)

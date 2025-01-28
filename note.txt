@@ -1,9 +1,0 @@
-echo "# b10a12-client-side-rohan26ir" >> README.md
-git init
-git add .
-git commit -m "first commit"
-git branch -M main
-git remote add origin https://github.com/Programming-Hero-Web-Course4/b10a12-client-side-rohan26ir.git
-git push -u origin main
-
-Link:  https://github.com/Programming-Hero-Web-Course4/b10a12-client-side-rohan26ir.git

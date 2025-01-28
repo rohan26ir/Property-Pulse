@@ -9,7 +9,7 @@ const useAxiosSecure = () => {
 
     const axiosSecure = useMemo(() => {
         const instance = axios.create({
-            baseURL: 'http://localhost:8000',
+            baseURL: 'https://property-pulse-server.vercel.app',
         });
 
         // Request interceptor

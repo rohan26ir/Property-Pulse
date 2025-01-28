@@ -14,7 +14,7 @@ const Navbar = () => {
   const [isMember] = useMember();
   const { role } = useRole();
 
-  console.log("isRole", role);
+  // console.log("isRole", role);
 
   const navMenu = (
     <>
@@ -35,13 +35,13 @@ const Navbar = () => {
       <div className="navbar-start">
         <div className="md:hidden">
           {/* Hamburger Menu */}
-          <button
+          {/* <button
             onClick={() => setShowIcon(!showIcon)}
             className="btn btn-ghost btn-circle"
             aria-label="Toggle Docs"
           >
             <GiHamburgerMenu />
-          </button>
+          </button> */}
           {/* Display Toggle */}
           {showIcon && (
             <div className="absolute top-16 left-0 bg-base-300 pl-3 pr-8 py-4 rounded-r-lg">

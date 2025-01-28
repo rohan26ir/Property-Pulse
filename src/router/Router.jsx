@@ -19,6 +19,7 @@ import ManageCoupons from "../pages/Admin/ManageCoupons";
 import MakeAnnouncement from "../pages/Admin/MakeAnnouncement";
 import AgreementRequests from "../pages/Admin/AgreementRequests";
 import MemberProfile from "../layouts/Member/MemberProfile";
+import Payment from "../pages/Payments/MakePayment";
 
 const Router = createBrowserRouter([
   {
@@ -65,6 +66,10 @@ const Router = createBrowserRouter([
       {
         path: '/dashboard/announcements',
         element: <Announcements></Announcements>
+      },
+      {
+        path: "/dashboard/make-payment",
+        element: <PrivateRoute><Payment></Payment> </PrivateRoute>
       },
       {
         path: "/dashboard/MemberManage",

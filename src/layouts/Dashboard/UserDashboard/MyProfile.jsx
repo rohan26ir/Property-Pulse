@@ -46,7 +46,6 @@ const MyProfile = () => {
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, ease: "easeInOut" }}
       >
-        {/* Profile Image */}
         <motion.div
           className="flex-shrink-0"
           initial={{ scale: 0.9 }}
@@ -60,7 +59,6 @@ const MyProfile = () => {
           />
         </motion.div>
 
-        {/* User Details */}
         <motion.div
           className="flex flex-col flex-grow"
           initial={{ opacity: 0 }}
@@ -86,41 +84,38 @@ const MyProfile = () => {
         </div>
       </motion.div>
 
-      {/* Display All Accepted Agreements */}
+      {/* Display All Accepted Agreements in Table */}
       {acceptedAgreements.length > 0 ? (
-        <div className="w-full max-w-4xl bg-white p-6 shadow-xl rounded-xl">
-          <h3 className="text-2xl font-semibold text-gray-800">Accepted Agreements</h3>
-          <div className="mt-6 space-y-6">
-            {acceptedAgreements.map((agreement) => (
-              <motion.div
-                key={agreement._id}
-                className="p-6 bg-gray-50 rounded-lg shadow-md hover:shadow-xl transition-all duration-300"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.8 }}
-              >
-                <h4 className="text-xl font-semibold text-gray-700">Agreement Details</h4>
-                <div className="mt-4 space-y-4">
-                  <div className="flex gap-4 items-center">
-                    <strong className="text-gray-600">Apartment Image:</strong>
-                    <img
-                      src={agreement.apartmentImage}
-                      alt="Apartment"
-                      className="w-32 h-32 object-cover rounded-md shadow-md"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <p><strong className="text-gray-600">Block Name:</strong> {agreement.blockName}</p>
-                    <p><strong className="text-gray-600">Floor No:</strong> {agreement.floorNo}</p>
-                    <p><strong className="text-gray-600">Apartment No:</strong> {agreement.apartmentNo}</p>
-                    <p><strong className="text-gray-600">Rent:</strong> ${agreement.rent}</p>
-                    <p><strong className="text-gray-600">Status:</strong> {agreement.status}</p>
-                    <p><strong className="text-gray-600">Agreement Request Date:</strong> {new Date(agreement.agreementRequestDate).toLocaleDateString()}</p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+        <div className="w-full max-w-4xl bg-white p-6 shadow-xl rounded-xl overflow-x-auto">
+          <h3 className="text-2xl font-semibold text-gray-800 mb-4">Accepted Agreements</h3>
+          <table className="w-full border-collapse border border-gray-200 text-left">
+            <thead className="bg-blue-100 text-gray-800">
+              <tr>
+                <th className="p-3 border border-gray-200">#</th>
+                <th className="p-3 border border-gray-200">Block Name</th>
+                <th className="p-3 border border-gray-200">Floor No</th>
+                <th className="p-3 border border-gray-200">Apartment No</th>
+                <th className="p-3 border border-gray-200">Rent</th>
+                <th className="p-3 border border-gray-200">Status</th>
+                <th className="p-3 border border-gray-200">Agreement Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {acceptedAgreements.map((agreement, index) => (
+                <tr key={agreement._id} className="hover:bg-blue-50">
+                  <td className="p-3 border border-gray-200">{index + 1}</td>
+                  <td className="p-3 border border-gray-200">{agreement.blockName}</td>
+                  <td className="p-3 border border-gray-200">{agreement.floorNo}</td>
+                  <td className="p-3 border border-gray-200">{agreement.apartmentNo}</td>
+                  <td className="p-3 border border-gray-200">${agreement.rent}</td>
+                  <td className="p-3 border border-gray-200">{agreement.status}</td>
+                  <td className="p-3 border border-gray-200">
+                    {new Date(agreement.agreementRequestDate).toLocaleDateString()}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       ) : (
         <div className="mt-6 text-lg text-gray-600">No accepted agreements found.</div>

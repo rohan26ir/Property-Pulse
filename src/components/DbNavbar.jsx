@@ -41,11 +41,11 @@ const DbNavbar = () => {
       <li>
         <NavLink to={"/dashboard/my-profile"}>My Profile</NavLink>
       </li>
-      <li>
+      {/* <li>
         <NavLink to={"/dashboard/agreement"}>Agreement</NavLink>
-      </li>
+      </li> */}
       <li>
-        <NavLink to={"/make-payment"}>Make Payment</NavLink>
+        <NavLink to={"/dashboard/make-payment"}>Make Payment</NavLink>
       </li>
       <li>
         <NavLink to={"/payment-history"}>Payment History</NavLink>

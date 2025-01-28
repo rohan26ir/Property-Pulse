@@ -24,9 +24,6 @@ const Navbar = () => {
       <li>
         <NavLink to={"/apartment"}>Apartment</NavLink>
       </li>
-      <li>
-        <NavLink to={"/notice"}>Notices</NavLink>
-      </li>
     </>
   );
 
@@ -65,7 +62,7 @@ const Navbar = () => {
       {/* Navbar End */}
       <div className="navbar-end">
         {/* Cart Dropdown */}
-        <div className="dropdown dropdown-end">
+        {/* <div className="dropdown dropdown-end">
           <button tabIndex={0} className="btn btn-ghost btn-circle">
             <div className="indicator">
               <svg
@@ -97,7 +94,7 @@ const Navbar = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
         {/* User Dropdown */}
         <div className="dropdown dropdown-end flex items-center gap-3">
           {user ? (

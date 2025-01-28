@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
-import { FaPlus } from 'react-icons/fa';
+import { FaPlus, FaToggleOn, FaToggleOff } from 'react-icons/fa';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const ManageCoupons = () => {
@@ -46,13 +46,13 @@ const ManageCoupons = () => {
           return null;
         }
 
-        return { couponCode, discount: parseFloat(discount), description };
+        return { couponCode, discount: parseFloat(discount), description, available: true };
       },
     }).then((result) => {
       if (result.isConfirmed) {
         axiosSecure.post('/coupons', result.value)
-          .then(() => {
-            setCoupons((prev) => [...prev, result.value]);
+          .then((res) => {
+            setCoupons((prev) => [...prev, res.data]);
             Swal.fire('Success', 'Coupon added successfully!', 'success');
           })
           .catch((error) => {
@@ -63,12 +63,29 @@ const ManageCoupons = () => {
     });
   };
 
+  // Toggle coupon availability
+  const handleToggleAvailability = (couponId, currentStatus) => {
+    axiosSecure.patch(`/coupons/${couponId}`)
+      .then((response) => {
+        setCoupons((prev) =>
+          prev.map((coupon) =>
+            coupon._id === couponId ? { ...coupon, available: !currentStatus } : coupon
+          )
+        );
+        Swal.fire('Success', response.data.message, 'success');
+      })
+      .catch((error) => {
+        console.error('Error toggling coupon availability:', error);
+        Swal.fire('Error', 'Failed to update coupon status. Please try again.', 'error');
+      });
+  };
+
   if (loading) {
     return <div className="flex justify-center items-center h-60">Loading...</div>;
   }
 
   return (
-    <div>
+    <div className="p-6">
       <h2 className="text-2xl font-semibold mb-6">Manage Coupons</h2>
       <button
         onClick={handleAddCoupon}
@@ -83,6 +100,8 @@ const ManageCoupons = () => {
               <th className="border border-gray-300 px-4 py-2">Coupon Code</th>
               <th className="border border-gray-300 px-4 py-2">Discount (%)</th>
               <th className="border border-gray-300 px-4 py-2">Description</th>
+              <th className="border border-gray-300 px-4 py-2">Availability</th>
+              <th className="border border-gray-300 px-4 py-2">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -92,6 +111,27 @@ const ManageCoupons = () => {
                 <td className="border border-gray-300 px-4 py-2">{coupon.couponCode}</td>
                 <td className="border border-gray-300 px-4 py-2">{coupon.discount}</td>
                 <td className="border border-gray-300 px-4 py-2">{coupon.description}</td>
+                <td className="border border-gray-300 px-4 py-2">
+                  {coupon.available ? 'Available' : 'Unavailable'}
+                </td>
+                <td className="border border-gray-300 px-4 py-2">
+                  <button
+                    onClick={() => handleToggleAvailability(coupon._id, coupon.available)}
+                    className={`px-4 py-2 rounded text-white ${
+                      coupon.available ? 'bg-red-500' : 'bg-green-500'
+                    } flex items-center gap-2`}
+                  >
+                    {coupon.available ? (
+                      <>
+                        <FaToggleOff /> Deactivate
+                      </>
+                    ) : (
+                      <>
+                        <FaToggleOn /> Activate
+                      </>
+                    )}
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>

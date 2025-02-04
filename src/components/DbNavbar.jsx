@@ -25,7 +25,7 @@ const DbNavbar = () => {
     </>
   );
 
-  const memberMenu = (
+  const userMenu  = (
     <>
       <li>
         <NavLink to={"/dashboard/member-profile"}>My Profile</NavLink>
@@ -36,7 +36,7 @@ const DbNavbar = () => {
     </>
   );
 
-  const userMenu = (
+  const memberMenu = (
     <>
       <li>
         <NavLink to={"/dashboard/my-profile"}>My Profile</NavLink>
@@ -48,7 +48,7 @@ const DbNavbar = () => {
         <NavLink to={"/dashboard/make-payment"}>Make Payment</NavLink>
       </li>
       <li>
-        <NavLink to={"/payment-history"}>Payment History</NavLink>
+        <NavLink to={"/dashboard/oayment-history"}>Payment History</NavLink>
       </li>
       <li>
         <NavLink to={"/dashboard/announcements"}>Announcements</NavLink>
@@ -64,8 +64,8 @@ const DbNavbar = () => {
           <ul className="menu menu-vertical px-1 gap-1">
             {/* Render menu based on role */}
             {role === "Manager" && adminMenu}
-            {role === "Resident" && memberMenu}
-            {role === "Tenant" && userMenu}
+            {role === "Tenant" && memberMenu}
+            {role === "Resident" && userMenu}
           </ul>
         </div>
       </div>

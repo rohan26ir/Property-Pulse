@@ -5,7 +5,7 @@ const AboutBuilding = () => {
 
   useEffect(() => {
     fetch("/aboutBuilding.json")
-      .then((res) => res.json()) // Fixed the missing parentheses in res.json()
+      .then((res) => res.json()) 
       .then((data) => setData(data))
       .catch((error) => console.error("Error fetching data:", error));
   }, []);

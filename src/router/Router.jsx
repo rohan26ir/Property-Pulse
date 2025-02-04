@@ -20,6 +20,7 @@ import MakeAnnouncement from "../pages/Admin/MakeAnnouncement";
 import AgreementRequests from "../pages/Admin/AgreementRequests";
 import MemberProfile from "../layouts/Member/MemberProfile";
 import Payment from "../pages/Payments/MakePayment";
+import PaymentHistory from "../pages/Payments/PaymentHistory";
 
 const Router = createBrowserRouter([
   {
@@ -70,6 +71,10 @@ const Router = createBrowserRouter([
       {
         path: "/dashboard/make-payment",
         element: <PrivateRoute><Payment></Payment> </PrivateRoute>
+      },
+      {
+        path: "/dashboard/oayment-history",
+        element: <PrivateRoute><PaymentHistory></PaymentHistory></PrivateRoute>
       },
       {
         path: "/dashboard/MemberManage",

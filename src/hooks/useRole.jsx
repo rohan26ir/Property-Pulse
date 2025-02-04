@@ -17,10 +17,10 @@ const useRole = () => {
   }
 
   if (isMember) {
-    return { role: "Resident" }; // If user is a member
+    return { role: "Tenant" }; // If user is a member
   }
 
-  return { role: "Tenant" }; // Default role for users with no specific role
+  return { role: "Resident" }; // Default role for users with no specific role
 };
 
 export default useRole;

@@ -1,125 +1,85 @@
 import {
-  createUserWithEmailAndPassword,
-  GoogleAuthProvider,
-  onAuthStateChanged,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-  signOut,
-  updateProfile,
-} from "firebase/auth";
-import React, { createContext, useEffect, useState } from "react";
-import auth from "../Firebase/Firebase.config";
+    createUserWithEmailAndPassword,
+    GoogleAuthProvider,
+    onAuthStateChanged,
+    signInWithEmailAndPassword,
+    signInWithPopup,
+    signOut,
+    updateProfile,
+  } from "firebase/auth";
+  import auth from "../Firebase/Firebase.config";
 import useAxiosPublic from "../hooks/useAxiosPublic";
+import { createContext, useEffect, useState } from "react";
 
 export const AuthContext = createContext();
 
-const googleProvider = new GoogleAuthProvider();
 
 const Provider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [message, setMessage] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-  const axiosInstance = useAxiosPublic();
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const googleProvider = new GoogleAuthProvider();
+    const axiosPublic = useAxiosPublic();
 
-  // Create new user
-  const createNewUser = (email, password, name, photoUrl) => {
-      setLoading(true);
-      return createUserWithEmailAndPassword(auth, email, password)
-          .then((result) => {
-              const user = result.user;
+    const createNewUser = (email, password) => {
+        setLoading(true);
+        return createUserWithEmailAndPassword(auth, email, password)
+    }
 
-              // Update profile with name and photo
-              return updateProfile(user, {
-                  displayName: name,
-                  photoURL: photoUrl,
-              }).then(() => {
-                  setUser({ ...user, displayName: name, photoURL: photoUrl });
-                  return user; // Return updated user object
-              });
-          })
-          .catch((error) => {
-              console.error("Error creating user:", error.message);
-              throw error;
-          })
-          .finally(() => setLoading(false));
-  };
+    const logIn = (email, password) => {
+        setLoading(true);
+        return signInWithEmailAndPassword(auth, email, password);
+    }
 
-  // Sign in
-  const logIn = (email, password) => {
-      setLoading(true);
-      return signInWithEmailAndPassword(auth, email, password)
-          .catch((error) => {
-              console.error("Login error:", error.message);
-              throw error;
-          })
-          .finally(() => setLoading(false));
-  };
+    const signInWithGoogle = () => {
+        setLoading(true);
+        return signInWithPopup(auth, googleProvider);
+    }
 
-  // Sign in with Google
-  const signInWithGoogle = () => {
-      setLoading(true);
-      return signInWithPopup(auth, googleProvider)
-          .catch((error) => {
-              console.error("Google sign-in error:", error.message);
-              throw error;
-          })
-          .finally(() => setLoading(false));
-  };
+    const logOut = () => {
+        setLoading(true);
+        return signOut(auth);
+    }
 
-  // Log out
-  const logOut = () => {
-      setLoading(true);
-      return signOut(auth)
-          .then(() => {
-              setUser(null);
-          })
-          .catch((error) => {
-              console.error("Logout error:", error.message);
-              throw error;
-          })
-          .finally(() => setLoading(false));
-  };
 
-  const authInfo = {
-      user,
-      setUser,
-      signInWithGoogle,
-      createNewUser,
-      logOut,
-      logIn,
-      loading,
-      message,
-      setMessage,
-      errorMessage,
-  };
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, currentUser => {
+            setUser(currentUser);
+            if (currentUser) {
+                const userInfo = { email: currentUser.email };
+                axiosPublic.post('/jwt', userInfo)
+                    .then(res => {
+                        if (res.data.token) {
+                            localStorage.setItem('access-token', res.data.token);
+                            console.log("res.data.token", res.data.token);
+                            setLoading(false);
+                        }
+                    })
+            }
+            else {
+                localStorage.removeItem('access-token');
+                setLoading(false);
+            }
+            
+        });
+        return () => {
+            return unsubscribe();
+        }
+    }, [axiosPublic])
 
-  useEffect(() => {
-      const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-          setUser(currentUser);
-          if (currentUser) {
-              try {
-                  const userInfo = { email: currentUser.email };
-                  const response = await axiosInstance.post('/jwt', userInfo);
-                  if (response.data.token) {
-                      localStorage.setItem('access-token', response.data.token);
-                  }
-              } catch (error) {
-                  console.error("Error generating JWT:", error);
-                  setErrorMessage("Failed to generate token.");
-              }
-          } else {
-              localStorage.removeItem('access-token');
-          }
-          setLoading(false);
-      });
+    const authInfo = {
+        user,
+        loading,
+        createNewUser,
+        logIn,
+        signInWithGoogle,
+        logOut,
+    }
 
-      return () => unsubscribe();
-  }, [axiosInstance]);
-
-  return (
-      <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
-  );
+    return (
+        <AuthContext.Provider value={authInfo}>
+            {children}
+        </AuthContext.Provider>
+    );
 };
 
 export default Provider;

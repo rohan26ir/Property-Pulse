@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import useAxiosSecure from '../../hooks/useAxiosSecure';
+import React, { useEffect, useState } from "react";
+import Swal from "sweetalert2";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const AgreementRequests = () => {
   const [agreements, setAgreements] = useState([]);
@@ -9,34 +10,56 @@ const AgreementRequests = () => {
     // Fetch agreement requests
     const fetchAgreements = async () => {
       try {
-        const response = await axiosSecure.get('/agreements');
+        const response = await axiosSecure.get("/agreements");
         // Filter out agreements with status "accepted"
         const pendingAgreements = response.data.filter(
-          (agreement) => agreement.status !== 'accepted'
+          (agreement) => agreement.status !== "accepted"
         );
         setAgreements(pendingAgreements);
       } catch (error) {
-        console.error('Error fetching agreements:', error);
+        console.error("Error fetching agreements:", error);
       }
     };
     fetchAgreements();
   }, [axiosSecure]);
 
+  // Handle Accept Agreement & Update User Role
   const handleAccept = async (id) => {
     try {
-      await axiosSecure.patch(`/agreements/status/${id}`, { status: 'accepted' });
+      const response = await axiosSecure.patch(`/agreements/status/${id}`, { status: "accepted" });
+
+      Swal.fire({
+        icon: "success",
+        title: response.data.message,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+
       setAgreements((prev) => prev.filter((agreement) => agreement._id !== id));
     } catch (error) {
-      console.error('Error accepting agreement:', error);
+      console.error("Error accepting agreement:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Failed to accept agreement",
+        text: error.message,
+      });
     }
   };
 
+  // Handle Reject Agreement
   const handleReject = async (id) => {
     try {
       await axiosSecure.delete(`/agreements/${id}`);
       setAgreements((prev) => prev.filter((agreement) => agreement._id !== id));
+
+      Swal.fire({
+        icon: "info",
+        title: "Agreement request rejected.",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     } catch (error) {
-      console.error('Error rejecting agreement:', error);
+      console.error("Error rejecting agreement:", error);
     }
   };
 
@@ -63,7 +86,7 @@ const AgreementRequests = () => {
                   <span className="font-medium">Rent:</span> ${agreement.rent}
                 </p>
                 <p>
-                  <span className="font-medium">Request Date:</span>{' '}
+                  <span className="font-medium">Request Date:</span>{" "}
                   {new Date(agreement.agreementRequestDate).toLocaleDateString()}
                 </p>
               </div>

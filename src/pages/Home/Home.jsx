@@ -4,6 +4,7 @@ import AboutBuilding from './AboutBuilding/AboutBuilding';
 import Coupons from './Coupons/Coupons';
 import useAuth from '../../hooks/useAuth';
 import { AuthContext } from '../../Provider/Provider';
+import ApartmentLocation from './ApartmentLocation/ApartmentLocation';
 
 const Home = () => {
 
@@ -23,6 +24,10 @@ const Home = () => {
           {
             user ? <Coupons></Coupons> : ''
           }
+        </div>
+
+        <div>
+        {ApartmentLocation && <ApartmentLocation />}
         </div>
       </main>
     </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const useAgreements = () => {
+const PaymentHistory = () => {
   return (
     <div>
       
@@ -8,4 +8,4 @@ const useAgreements = () => {
   );
 };
 
-export default useAgreements;
+export default PaymentHistory;

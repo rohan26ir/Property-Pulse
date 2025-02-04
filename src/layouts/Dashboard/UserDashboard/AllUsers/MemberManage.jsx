@@ -20,35 +20,30 @@ const MemberManage = () => {
     fetchUsers();
   }, [axiosSecure]);
 
-  // Handle role changes
-  const handleRoleChange = async (user, action) => {
-    const newRole = action === "reject" ? "member" : null; // Reject sets role to 'member', Accept removes role
+  // Handle role removal
+  const handleRoleRemove = async (user) => {
     try {
-      const res = await axiosSecure.patch(`/users/role/${user._id}`, { role: newRole });
+      const res = await axiosSecure.patch(`/users/remove-role/${user._id}`);
 
       if (res.data.success) {
         // Update the local state with the returned data
         setUsers((prevUsers) =>
           prevUsers.map((u) =>
-            u._id === user._id ? res.data.data : u
+            u._id === user._id ? { ...u, role: null } : u
           )
         );
 
-        const actionMessage =
-          action === "reject"
-            ? `${user.name}'s role has been changed to Resident.`
-            : `${user.name}'s role has been removed.`;
-        toast.success(actionMessage, {
+        toast.success(`${user.name}'s role has been removed.`, {
           position: "top-right",
           autoClose: 3000,
         });
       }
     } catch (error) {
-      toast.error("Failed to update role. Please try again later.", {
+      toast.error("Failed to remove role. Please try again later.", {
         position: "top-right",
         autoClose: 3000,
       });
-      console.error("Error updating role:", error);
+      console.error("Error removing role:", error);
     }
   };
 
@@ -100,19 +95,12 @@ const MemberManage = () => {
                   )}
                 </td>
                 <td className="px-4 py-2">
-                  {user.role === "member" ? (
+                  {user.role && (
                     <button
-                      onClick={() => handleRoleChange(user, "accept")}
+                      onClick={() => handleRoleRemove(user)}
                       className="bg-red-500 text-white py-1 px-3 rounded-full text-sm hover:bg-red-600"
                     >
-                      Accept
-                    </button>
-                  ) : (
-                    <button
-                      onClick={() => handleRoleChange(user, "reject")}
-                      className="bg-green-500 text-white py-1 px-3 rounded-full text-sm hover:bg-green-600"
-                    >
-                      Reject
+                      Remove
                     </button>
                   )}
                 </td>

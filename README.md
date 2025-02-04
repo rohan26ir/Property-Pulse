@@ -89,6 +89,4 @@ Deployed on Firebase Hosting. Ensure domain is added to Firebase authentication 
 
 
 ## Repository Links  
-- [Client Repository](https://github.com/Programming-Hero-Web-Course4/b10a12-client-side-rohan26ir.git)
-
-- [Server Repository](https://github.com/Programming-Hero-Web-Course4/b10a12-server-side-rohan26ir.git)
+- [Server Repository](https://github.com/rohan26ir/Property-Pulse-server)

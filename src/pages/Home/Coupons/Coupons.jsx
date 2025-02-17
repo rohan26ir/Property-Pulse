@@ -15,7 +15,7 @@ const Coupons = () => {
   useEffect(() => {
     const fetchCoupons = async () => {
       try {
-        const response = await axiosSecure.get("/coupons"); // Adjust endpoint as necessary
+        const response = await axiosSecure.get("/coupons");
         setCoupons(response.data);
       } catch (error) {
         console.error("Error fetching coupons:", error);
@@ -43,10 +43,10 @@ const Coupons = () => {
   };
 
   return (
-    <div className="bg-[#1E1D85] p-10">
+    <div className="w-11/12 mx-auto py-10">
       <ToastContainer />
       <div className="flex flex-col items-center">
-        <div className="text-white mb-8 w-[85%] text-center">
+        <div className="text-white mb-8 text-center">
           <h2 className="text-3xl font-bold">Exclusive Building Coupons</h2>
           <p className="text-lg mt-2">
             Grab these amazing deals and save on your dream apartment!
@@ -59,23 +59,22 @@ const Coupons = () => {
             640: { slidesPerView: 1 },
             768: { slidesPerView: 2 },
             1024: { slidesPerView: 3 },
+            1280: { slidesPerView: 4 }, // 4 cards per view for large screens
           }}
-          pagination={{
-            clickable: true,
-          }}
+          // pagination={{ clickable: true }}
           navigation={true}
           modules={[Pagination, Navigation]}
-          className="mySwiper w-full"
+          className="mySwiper w-full mb-1"
         >
           {coupons.map((coupon, index) => (
             <SwiperSlide key={coupon._id}>
               <div
-                className="rounded-lg shadow-lg overflow-hidden flex flex-col justify-between p-4"
+                className="rounded-lg shadow-lg overflow-hidden flex flex-col justify-between p-4 h-72 min-h-[250px] flex-grow"
                 style={{
                   backgroundColor: colors[index % colors.length],
                 }}
               >
-                <div className="text-center">
+                <div className="text-center flex-grow">
                   <h3 className="text-2xl font-bold text-white">
                     {coupon.category}
                   </h3>

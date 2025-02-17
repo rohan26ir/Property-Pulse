@@ -3,9 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import Swal from "sweetalert2";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-// import { motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { AuthContext } from "../../Provider/Provider";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
+import { Helmet } from "react-helmet-async";
 
 const imageHostingKey = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const imageHostingAPI = `https://api.imgbb.com/1/upload?key=${imageHostingKey}`;
@@ -86,10 +87,24 @@ const SignUp = () => {
 
   return (
     <motion.div
-      className="py-5 flex justify-center items-center bg-gradient-to-br from-gray-200 via-gray-100 to-white"
+      className=" py-5 flex justify-center items-center bg-gradient-to-br from-gray-200 via-gray-100 to-white"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
     >
+      <Helmet>
+        <title>SignUp - PropertyPulse</title>
+      </Helmet>
+
+      {/* <div className="w-[70%] mx-auto justify-center"> */}
+
+      {/* <div className="flex-1">
+          <div>
+            <img src="" alt="" />
+          </div>
+          <h2 className="text-4xl font-bold">Create Your PropertyPulse Account</h2>
+          <p className="text-lg">Sign up to manage your properties effortlessly. Join today and experience a seamless property management solution at your fingertips!</p>
+        </div> */}
+
       <motion.div
         className="relative w-full max-w-md p-6 bg-white shadow-xl rounded-lg border"
         initial={{ scale: 0.9, opacity: 0 }}
@@ -176,6 +191,7 @@ const SignUp = () => {
           </motion.button>
         </form>
       </motion.div>
+      {/* </div> */}
     </motion.div>
   );
 };

@@ -3,6 +3,7 @@ import { FaGoogle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Provider/Provider";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
+import { FcGoogle } from "react-icons/fc";
 
 
 const LoginWith = () => {
@@ -29,11 +30,11 @@ const LoginWith = () => {
     }
 
     return (
-        <div className="p-8">
+        <div className="px-8 pb-4   ">
             <div className="divider"></div>
-            <div>
-                <button onClick={handleGoogleSignIn} className="btn">
-                    <FaGoogle className="mr-2"></FaGoogle>
+            <div className="flex justify-center  bg-gray-200 py-2">
+                <button onClick={handleGoogleSignIn} className="flex justify-center items-center">
+                    <FcGoogle className="mr-2"></FcGoogle>
                     Google
                 </button>
             </div>

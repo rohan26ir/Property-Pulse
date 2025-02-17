@@ -1,170 +1,114 @@
 [
   {
-    "_id": "642c155b2c4774f05c36eeaa",
+    "_id": "1",
     "name": "Skyline Heights",
     "description": "Skyline Heights is a luxurious and eco-friendly apartment complex located in the heart of the city, offering state-of-the-art facilities.",
     "location": {
-      "address": "123 Skyline Avenue, Downtown City",
-      "city": "Metropolis",
-      "state": "Urbania",
-      "postalCode": "56789",
-      "country": "Wonderland"
+      "reactLeafletLocation": { "lat": 23.8103, "lng": 90.4125 },
+      "displayLocation": "123 Skyline Avenue, Dhaka"
     },
-    "features": [
-      "24/7 Security",
-      "Gymnasium",
-      "Rooftop Garden",
-      "High-speed Elevators",
-      "Covered Parking"
-    ],
     "imageGallery": [
       "https://i.ibb.co.com/2FNGv8C/1.webp",
       "https://example.com/images/skyline2.jpg",
       "https://example.com/images/skyline3.jpg"
-    ],
-    "contactDetails": {
-      "phone": "+1234567890",
-      "email": "contact@skylineheights.com"
-    }
+    ]
   },
   {
-    "_id": "642c155b2c4774f05c36eebb",
+    "_id": "2",
     "name": "Emerald Residences",
     "description": "Emerald Residences is a tranquil haven with spacious apartments, designed for comfort and elegance.",
     "location": {
-      "address": "45 Emerald Lane, Uptown",
-      "city": "Metropolis",
-      "state": "Urbania",
-      "postalCode": "56800",
-      "country": "Wonderland"
+      "reactLeafletLocation": { "lat": 22.3569, "lng": 91.7832 },
+      "displayLocation": "45 Emerald Lane, Chattogram"
     },
-    "features": [
-      "Swimming Pool",
-      "Children's Play Area",
-      "Jogging Track",
-      "Visitor Parking",
-      "Backup Power Supply"
-    ],
     "imageGallery": [
       "https://i.ibb.co.com/f8gJWWV/2.webp",
       "https://example.com/images/emerald2.jpg",
       "https://example.com/images/emerald3.jpg"
-    ],
-    "contactDetails": {
-      "phone": "+1234567891",
-      "email": "info@emeraldresidences.com"
-    }
+    ]
   },
   {
-    "_id": "642c155b2c4774f05c36eecc",
+    "_id": "3",
     "name": "Ocean View Apartments",
     "description": "Located near the coast, Ocean View Apartments offers breathtaking sea views and modern conveniences.",
     "location": {
-      "address": "78 Ocean Drive, Seaside",
-      "city": "Metropolis",
-      "state": "Urbania",
-      "postalCode": "56900",
-      "country": "Wonderland"
+      "reactLeafletLocation": { "lat": 21.4272, "lng": 92.0058 },
+      "displayLocation": "78 Ocean Drive, Cox's Bazar"
     },
-    "features": [
-      "Sea-facing Balconies",
-      "Infinity Pool",
-      "Pet-friendly",
-      "Open-air Cafeteria",
-      "Smart Home Systems"
-    ],
     "imageGallery": [
       "https://i.ibb.co.com/4t7X1TS/3.jpg",
       "https://example.com/images/oceanview2.jpg",
       "https://example.com/images/oceanview3.jpg"
-    ],
-    "contactDetails": {
-      "phone": "+1234567892",
-      "email": "support@oceanview.com"
-    }
+    ]
   },
   {
-    "_id": "642c155b2c4774f05c36eedd",
+    "_id": "4",
     "name": "Pearl Towers",
     "description": "Pearl Towers is a contemporary residential complex offering premium apartments with stunning city views.",
     "location": {
-      "address": "89 Pearl Street, Central District",
-      "city": "Metropolis",
-      "state": "Urbania",
-      "postalCode": "57000",
-      "country": "Wonderland"
+      "reactLeafletLocation": { "lat": 24.3745, "lng": 88.6011 },
+      "displayLocation": "89 Pearl Street, Rajshahi"
     },
-    "features": [
-      "Sky Lounges",
-      "Fitness Center",
-      "Conference Room",
-      "On-site Maintenance",
-      "EV Charging Stations"
-    ],
     "imageGallery": [
       "https://i.ibb.co.com/2740WT4/4.webp",
       "https://example.com/images/pearl2.jpg",
       "https://example.com/images/pearl3.jpg"
-    ],
-    "contactDetails": {
-      "phone": "+1234567893",
-      "email": "pearl@towerresidences.com"
-    }
+    ]
   },
   {
-    "_id": "642c155b2c4774f05c36eeee",
+    "_id": "5",
     "name": "Golden Arcadia",
     "description": "Golden Arcadia combines traditional elegance with modern luxury, ideal for families and professionals.",
     "location": {
-      "address": "12 Arcadia Way, Golden Valley",
-      "city": "Metropolis",
-      "state": "Urbania",
-      "postalCode": "57100",
-      "country": "Wonderland"
+      "reactLeafletLocation": { "lat": 24.8949, "lng": 91.8687 },
+      "displayLocation": "12 Arcadia Way, Sylhet"
     },
-    "features": [
-      "Large Courtyards",
-      "Private Playgrounds",
-      "Sauna and Spa",
-      "Library and Reading Room",
-      "24/7 Concierge Service"
-    ],
     "imageGallery": [
       "https://i.ibb.co.com/FhK9v3M/5.webp",
       "https://example.com/images/golden2.jpg",
       "https://example.com/images/golden3.jpg"
-    ],
-    "contactDetails": {
-      "phone": "+1234567894",
-      "email": "golden@arcadia.com"
-    }
+    ]
   },
   {
-    "_id": "642c155b2c4774f05c36eeff",
+    "_id": "6",
     "name": "Crystal Heights",
     "description": "Crystal Heights features modern design and upscale amenities for urban living at its best.",
     "location": {
-      "address": "100 Crystal Avenue, Innovation Park",
-      "city": "Metropolis",
-      "state": "Urbania",
-      "postalCode": "57200",
-      "country": "Wonderland"
+      "reactLeafletLocation": { "lat": 23.9985, "lng": 90.4203 },
+      "displayLocation": "100 Crystal Avenue, Gazipur"
     },
-    "features": [
-      "Glass-fronted Balconies",
-      "Community Events Space",
-      "Premium Flooring",
-      "Fiber-optic Internet",
-      "Green Energy Solutions"
-    ],
     "imageGallery": [
       "https://i.ibb.co.com/56jj2Wc/6.webp",
       "https://example.com/images/crystal2.jpg",
       "https://example.com/images/crystal3.jpg"
-    ],
-    "contactDetails": {
-      "phone": "+1234567895",
-      "email": "crystal@heights.com"
-    }
+    ]
+  },
+  {
+    "_id": "7",
+    "name": "Sunset Residency",
+    "description": "Sunset Residency offers breathtaking views of the river, modern architecture, and a serene living environment.",
+    "location": {
+      "reactLeafletLocation": { "lat": 22.7010, "lng": 90.3535 },
+      "displayLocation": "56 River Road, Barishal"
+    },
+    "imageGallery": [
+      "https://i.ibb.co.com/5XmRzCJS/Sunset-Residency.webp",
+      "https://example.com/images/sunset2.jpg",
+      "https://example.com/images/sunset3.jpg"
+    ]
+  },
+  {
+    "_id": "8",
+    "name": "Lakeview Tower",
+    "description": "Lakeview Tower is a high-rise apartment with spectacular lake views and premium lifestyle amenities.",
+    "location": {
+      "reactLeafletLocation": { "lat": 24.7471, "lng": 90.4203 },
+      "displayLocation": "22 Lake Avenue, Mymensingh"
+    },
+    "imageGallery": [
+      "https://i.ibb.co.com/gZYvgwzg/Lakeview-Tower.webp",
+      "https://example.com/images/lakeview2.jpg",
+      "https://example.com/images/lakeview3.jpg"
+    ]
   }
 ]

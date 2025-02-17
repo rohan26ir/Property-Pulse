@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Provider/Provider";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
+import { Helmet } from "react-helmet-async";
 
 const Apartment = () => {
   const [apartments, setApartments] = useState([]);
@@ -111,6 +112,11 @@ const Apartment = () => {
 
   return (
     <div className="w-11/12 mx-auto my-5">
+
+       <Helmet>
+        <title>Apartment - PropertyPulse</title>
+      </Helmet>
+
       <h2 className="text-2xl font-bold text-center mb-4">Apartment Listings</h2>
 
       {/* Search functionality */}

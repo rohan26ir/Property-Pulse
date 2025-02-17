@@ -25,5 +25,6 @@ dist-ssr
 
 
 # add 
+.env
 .env.local
 requirement.pdf

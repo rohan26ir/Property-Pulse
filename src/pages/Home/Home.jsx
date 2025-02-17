@@ -4,7 +4,7 @@ import AboutBuilding from './AboutBuilding/AboutBuilding';
 import Coupons from './Coupons/Coupons';
 import useAuth from '../../hooks/useAuth';
 import { AuthContext } from '../../Provider/Provider';
-import ApartmentLocation from './ApartmentLocation/ApartmentLocation';
+// import ApartmentLocation from './ApartmentLocation/ApartmentLocation';
 
 const Home = () => {
 
@@ -27,7 +27,7 @@ const Home = () => {
         </div>
 
         <div>
-        {ApartmentLocation && <ApartmentLocation />}
+        {/* {ApartmentLocation && <ApartmentLocation />} */}
         </div>
       </main>
     </div>

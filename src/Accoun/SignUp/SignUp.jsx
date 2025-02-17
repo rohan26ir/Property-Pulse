@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import Swal from "sweetalert2";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import { motion } from "framer-motion";
+// import { motion } from "framer-motion";
 import { AuthContext } from "../../Provider/Provider";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 

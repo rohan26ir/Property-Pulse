@@ -7,7 +7,11 @@ const Mainlayout = () => {
   return (
     <div>
       <header className='z-30'>
-        <Navbar></Navbar>
+
+       <div className=''>
+       <Navbar></Navbar>
+       </div>
+
       </header>
       <main className=''>
         <Outlet></Outlet>

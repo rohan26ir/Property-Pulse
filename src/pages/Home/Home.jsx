@@ -31,7 +31,7 @@ const Home = () => {
           {user ? <div className="bg-gray-500"><Coupons></Coupons></div> : ""}
         </div>
 
-        <div>
+        <div className="w-11/12 mx-auto">
         
          <HomeLocation></HomeLocation>
         

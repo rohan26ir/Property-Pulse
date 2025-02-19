@@ -39,7 +39,7 @@ const Newsletter = () => {
   };
 
   return (
-    <div className='py-2'>
+    <div className='py-6'>
       <div className="p-8 bg-white rounded-lg shadow-md w-full flex flex-col md:flex-row items-center">
        
        <div>
@@ -65,7 +65,7 @@ const Newsletter = () => {
             </div>
             <button
               type="submit"
-              className="bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition duration-200"
+              className="border-2 border-gray-300 text-black py-2 rounded-md hover:bg-gray-200 transition duration-200"
             >
               Subscribe Now
             </button>

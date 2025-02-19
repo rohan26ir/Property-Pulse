@@ -20,7 +20,7 @@ const AboutBuilding = () => {
   return (
     <div className="">
       <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold text-blue-600">About The Building</h2>
+        <h2 className="text-3xl font-bold">About The Building</h2>
         <p className="text-gray-700">
           Explore details about our apartments and find your perfect match!
         </p>
@@ -41,7 +41,7 @@ const AboutBuilding = () => {
               <h3 className="text-xl font-bold text-blue-800">{building.name}</h3>
               <p className="text-gray-700 mt-2 flex-grow">{building.description}</p>
 
-              <div className="mt-4 flex justify-center items-center border-2 rounded-lg border-gray-300"
+              <div className="mt-4 flex justify-center items-center border-2 rounded-lg border-gray-300 cursor-pointer hover:bg-gray-300"
               
               onClick={() => handleReadMore(building)}
               >
@@ -75,7 +75,7 @@ const AboutBuilding = () => {
             <div className="modal-action">
               <form method="dialog">
                 {/* Close the modal */}
-                <button className="bg-black px-4 py-1 rounded-2xl text-white">Close</button>
+                <button className="border-2 border-gray-300 px-4 py-1 rounded-lg text-black hover:bg-gray-300">Close</button>
               </form>
             </div>
           </div>

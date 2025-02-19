@@ -92,11 +92,10 @@ const Hero = () => {
                 <img
                   src={data.img}
                   alt={data.title}
-                  className="w-full h-[400px] object-cover "
+                  className="w-full h-[200px] md:h-[400px] object-cover "
                 />
                 <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-50 text-white px-6 py-4 rounded-md">
-                  <h3 className="text-lg font-bold">{data.title}</h3>
-                  <p className="text-sm">{data.description}</p>
+                  
                 </div>
               </div>
             </SwiperSlide>

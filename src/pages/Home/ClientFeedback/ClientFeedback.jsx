@@ -46,8 +46,8 @@ const clientReviews = [
 
 const ClientFeedback = () => {
   return (
-    <div className="pt-5 w-11/12 mx-auto">
-      <h2 className="text-3xl font-bold text-center text-blue-600 mb-6">
+    <div className="pt-6 w-11/12 mx-auto">
+      <h2 className="text-3xl font-bold text-center mb-4">
         Client Feedback
       </h2>
 

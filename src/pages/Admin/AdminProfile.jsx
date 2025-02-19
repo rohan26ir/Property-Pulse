@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import useAuth from '../../hooks/useAuth';
+import React, { useEffect, useState } from "react";
+import useAuth from "../../hooks/useAuth";
 import { motion } from "framer-motion";
-import useAxiosSecure from '../../hooks/useAxiosSecure';
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { updateProfile } from "firebase/auth";
+import { doc, updateDoc, getDoc } from "firebase/firestore";
 
 const AdminProfile = () => {
   const { user } = useAuth();
-  const { displayName, email, photoURL } = user;
+  const { displayName, email, photoURL, metadata, phoneNumber, emailVerified } = user;
   const axiosSecure = useAxiosSecure();
 
   const [data, setData] = useState({
@@ -16,29 +18,43 @@ const AdminProfile = () => {
     totalMembers: 0,
   });
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [name, setName] = useState(displayName || "");
+  const [phone, setPhone] = useState(phoneNumber || "");
+  const [photo, setPhoto] = useState(photoURL || "");
+  const [location, setLocation] = useState("");
+
+  // Fetch additional user data from Firestore
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const userDoc = await getDoc(doc(db, "users", user.uid));
+      if (userDoc.exists()) {
+        setPhone(userDoc.data().phone || "");
+        setLocation(userDoc.data().location || "");
+      }
+    };
+    fetchUserData();
+  }, [user.uid]);
+
+  // Fetch Admin Dashboard Data
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch total number of rooms
-        const apartmentsResponse = await axiosSecure.get('/apartment');
+        const apartmentsResponse = await axiosSecure.get("/apartment");
         const totalRooms = apartmentsResponse.data.total || 0;
 
-        // Calculate room availability percentages
-        const availableRooms = await axiosSecure.get('/agreementsAccep');
+        const availableRooms = await axiosSecure.get("/agreementsAccep");
         const availableCount = availableRooms.data.apartments.length;
         const unavailableCount = totalRooms - availableCount;
 
         const availablePercentage = ((availableCount / totalRooms) * 100).toFixed(2);
         const unavailablePercentage = ((unavailableCount / totalRooms) * 100).toFixed(2);
 
-        console.log("Available:", availableCount, "Unavailable:", unavailableCount);
-
-        // Fetch all users
-        const usersResponse = await axiosSecure.get('/users');
+        const usersResponse = await axiosSecure.get("/users");
         const users = usersResponse.data;
 
         const usersWithoutRole = users.filter(user => !user.role).length;
-        const totalMembers = users.filter(user => user.role === 'member').length;
+        const totalMembers = users.filter(user => user.role === "member").length;
 
         setData({
           totalRooms,
@@ -48,12 +64,32 @@ const AdminProfile = () => {
           totalMembers,
         });
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
       }
     };
 
     fetchData();
   }, [axiosSecure]);
+
+  // Handle Profile Update
+  const handleUpdate = async () => {
+    try {
+      await updateProfile(user, {
+        displayName: name,
+        photoURL: photo,
+      });
+
+      // Update Firestore with phone number and location
+      await updateDoc(doc(db, "users", user.uid), {
+        phone,
+        location,
+      });
+
+      setIsModalOpen(false);
+    } catch (error) {
+      console.error("Error updating profile:", error);
+    }
+  };
 
   return (
     <div className="flex flex-col items-center justify-center gap-10 p-10 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 min-h-screen">
@@ -63,7 +99,6 @@ const AdminProfile = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeInOut" }}
       >
-        {/* Profile Image */}
         <motion.div
           className="flex-shrink-0"
           initial={{ scale: 0.8 }}
@@ -77,7 +112,6 @@ const AdminProfile = () => {
           />
         </motion.div>
 
-        {/* User Details */}
         <motion.div
           className="flex flex-col"
           initial={{ opacity: 0 }}
@@ -86,12 +120,19 @@ const AdminProfile = () => {
         >
           <h2 className="text-3xl font-extrabold text-white">{displayName || "User Name"}</h2>
           <p className="text-gray-200 mt-2 text-lg">{email}</p>
+          <p className="text-gray-200 mt-1 text-lg">Phone: {phone || "N/A"}</p>
+          <p className="text-gray-200 mt-1 text-lg">Location: {location || "N/A"}</p>
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="mt-4 px-4 py-2 bg-blue-400 text-white rounded-lg hover:bg-blue-500 transition"
+          >
+            Update Profile
+          </button>
         </motion.div>
       </motion.div>
 
-      {/* Additional Info */}
       <motion.div
-        className="bg-gradient-to-r from-gray-800 to-gray-700 shadow-lg rounded-lg p-8 w-full max-w-4xl text-gray-300"
+        className="bg-gray-800 shadow-lg rounded-lg p-8 w-full max-w-4xl text-gray-300"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.6 }}
@@ -120,6 +161,18 @@ const AdminProfile = () => {
           </div>
         </div>
       </motion.div>
+
+      {isModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+            <h2 className="text-xl font-semibold mb-4">Update Profile</h2>
+            <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder="Name" className="w-full p-2 border rounded mb-3" />
+            <input type="text" value={phone} onChange={e => setPhone(e.target.value)} placeholder="Phone" className="w-full p-2 border rounded mb-3" />
+            <input type="text" value={location} onChange={e => setLocation(e.target.value)} placeholder="Location" className="w-full p-2 border rounded mb-3" />
+            <button onClick={handleUpdate} className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Save</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

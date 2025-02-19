@@ -29,7 +29,7 @@ const HomeLocation = () => {
 
   return (
     <div>
-      <div className="my-5 flex flex-col justify-center items-center">
+      <div className="py-6 flex flex-col justify-center items-center">
         <h2 className="text-3xl font-bold">Explore Our Property Locations</h2>
         <p className="my-2">
           View our properties on the map and explore their surroundings.

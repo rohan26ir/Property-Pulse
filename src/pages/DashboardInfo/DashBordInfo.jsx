@@ -159,7 +159,7 @@ const DashBordInfo = () => {
       <div className="flex flex-col md:flex-row justify-center gap-10">
         <div>
           <div className="pt-7"> 
-            <div className="bg-white p-4 shadow-md rounded-lg flex flex-col h-80">
+            <div className="bg-white p-4 shadow-md rounded-lg flex flex-col h-96">
               <h3 className="text-lg font-semibold mb-4">Coupons Distribution</h3>
               <div className="h-full">
                 <Pie data={couponsChartData} />
@@ -170,7 +170,7 @@ const DashBordInfo = () => {
 
         <div>
           {/* Pending & Accepted Agreements Pie Chart */}
-          <div className="bg-white p-4 shadow-md rounded-lg h-80 mt-6">
+          <div className="bg-white p-4 shadow-md rounded-lg h-96 mt-6">
             <h3 className="text-lg font-semibold mb-4">Agreements Status</h3>
             <Pie data={agreementsStatusChartData} />
           </div>

@@ -21,6 +21,9 @@ import AgreementRequests from "../pages/Admin/AgreementRequests";
 import MemberProfile from "../layouts/Member/MemberProfile";
 import Payment from "../pages/Payments/MakePayment";
 import PaymentHistory from "../pages/Payments/PaymentHistory";
+import AboutUs from "../pages/AboutUs/AboutUs";
+import ContactUs from "../pages/ContactUs/ContactUs";
+import Services from "../pages/Services/Services";
 
 const Router = createBrowserRouter([
   {
@@ -43,6 +46,18 @@ const Router = createBrowserRouter([
       {
         path: "/apartment",
         element: <Apartment></Apartment>
+      },
+      {
+        path: '/about',
+        element: <AboutUs></AboutUs>
+      },
+      {
+        path: "/contact",
+        element: <ContactUs></ContactUs>
+      },
+      {
+        path: "/services",
+        element: <Services></Services>
       }
     ]
   },

@@ -6,29 +6,31 @@ import DbNavbar from '../../components/DbNavbar';
 
 const Dashboard = () => {
   return (
-    <div >
-      <header>
+    <div className="min-h-screen flex flex-col">
+      {/* Uncomment if Navbar is needed */}
+      {/* <header>
         <Navbar></Navbar>
-      </header>
-      <main className='min-h-80'>
+      </header> */}
 
-        <div className='flex gap-2'>
-
-          <div className='w-[25%] min-h-80 bg-gray-500 bg-opacity-30 shadow-2xl'>
-            <DbNavbar></DbNavbar></div>
-
-          <div className='w-[75%] m-auto py-5'>
-            <Outlet></Outlet>
-          </div>
-        
+      <main className="flex flex-grow">
+        {/* Sidebar (DbNavbar) */}
+        <div className="w-[20%] min-h-screen bg-gray-500 bg-opacity-30 shadow-2xl fixed left-0 top-0 bottom-0 overflow-y-auto">
+          <DbNavbar />
         </div>
 
+        {/* Main Content */}
+        <div className="w-[80%] ml-[25%] p-5">
+          <Outlet />
+        </div>
       </main>
-      <footer>
+
+      {/* Uncomment if Footer is needed */}
+      {/* <footer>
         <Footer></Footer>
-      </footer>
+      </footer> */}
     </div>
   );
 };
+
 
 export default Dashboard;

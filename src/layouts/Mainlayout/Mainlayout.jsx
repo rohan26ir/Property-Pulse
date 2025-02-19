@@ -13,7 +13,7 @@ const Mainlayout = () => {
        </div>
 
       </header>
-      <main className=''>
+      <main className='bg-gray-100'>
         <Outlet></Outlet>
       </main>
       <footer>

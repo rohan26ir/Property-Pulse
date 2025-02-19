@@ -24,7 +24,6 @@ const AdminProfile = () => {
   const [photo, setPhoto] = useState(photoURL || "");
   const [location, setLocation] = useState("");
 
-  // Fetch additional user data from Firestore
   useEffect(() => {
     const fetchUserData = async () => {
       const userDoc = await getDoc(doc(db, "users", user.uid));
@@ -36,7 +35,6 @@ const AdminProfile = () => {
     fetchUserData();
   }, [user.uid]);
 
-  // Fetch Admin Dashboard Data
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -71,7 +69,6 @@ const AdminProfile = () => {
     fetchData();
   }, [axiosSecure]);
 
-  // Handle Profile Update
   const handleUpdate = async () => {
     try {
       await updateProfile(user, {
@@ -79,7 +76,6 @@ const AdminProfile = () => {
         photoURL: photo,
       });
 
-      // Update Firestore with phone number and location
       await updateDoc(doc(db, "users", user.uid), {
         phone,
         location,
@@ -92,75 +88,80 @@ const AdminProfile = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center gap-10 p-10 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 min-h-screen">
-      <motion.div
-        className="px-10 py-8 flex flex-row gap-6 items-center bg-gradient-to-r from-blue-500 to-indigo-600 shadow-xl rounded-xl"
-        initial={{ opacity: 0, y: -50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: "easeInOut" }}
-      >
-        <motion.div
-          className="flex-shrink-0"
-          initial={{ scale: 0.8 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 0.6, ease: "easeInOut" }}
-        >
-          <img
-            src={photoURL || "https://via.placeholder.com/150"}
-            alt="Profile"
-            className="w-32 h-32 rounded-full shadow-md object-cover border-4 border-white"
-          />
-        </motion.div>
+    <div className="bg-gray-100 px-10">
+      <div className="flex flex-col items-center gap-10 pb-8">
+        <div className="flex items-center justify-center w-full pt-10">
+          <motion.div
+            className="py-2 px-6 flex flex-row justify-center gap-10 items-center bg-white shadow-lg rounded-lg w-full max-w-4xl"
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, ease: "easeInOut" }}
+          >
+            <motion.div
+              className="flex-shrink-0"
+              initial={{ scale: 0.8 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 0.6, ease: "easeInOut" }}
+            >
+              <img
+                src={photoURL || "https://via.placeholder.com/150"}
+                alt="Profile"
+                className="w-32 h-32 rounded-full shadow-lg object-cover border-4 border-blue-300"
+              />
+            </motion.div>
+
+            <motion.div
+              className="flex flex-col space-y-2"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+            >
+              <h2 className="text-2xl font-bold">{displayName || "User Name"}</h2>
+              <p>Email: {email}</p>
+              <p>Phone: {phoneNumber || "N/A"}</p>
+              <p>
+                Email Verified:{" "}
+                <span className={emailVerified ? "text-green-500" : "text-red-500"}>
+                  {emailVerified ? "Yes" : "No"}
+                </span>
+              </p>
+              <p>Location: {location || "N/A"}</p>
+              <p>Created At: {metadata?.creationTime ? new Date(metadata.creationTime).toLocaleString() : "N/A"}</p>
+              <p>Last Sign-In: {metadata?.lastSignInTime ? new Date(metadata.lastSignInTime).toLocaleString() : "N/A"}</p>
+
+              <button
+                onClick={() => setIsModalOpen(true)}
+                className="mt-4 px-4 py-2 border-2 rounded-lg hover:bg-gray-300 transition"
+              >
+                Update Profile
+              </button>
+            </motion.div>
+          </motion.div>
+        </div>
 
         <motion.div
-          className="flex flex-col"
+          className="bg-white shadow-lg rounded-lg p-8 w-full max-w-4xl"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
         >
-          <h2 className="text-3xl font-extrabold text-white">{displayName || "User Name"}</h2>
-          <p className="text-gray-200 mt-2 text-lg">{email}</p>
-          <p className="text-gray-200 mt-1 text-lg">Phone: {phone || "N/A"}</p>
-          <p className="text-gray-200 mt-1 text-lg">Location: {location || "N/A"}</p>
-          <button
-            onClick={() => setIsModalOpen(true)}
-            className="mt-4 px-4 py-2 bg-blue-400 text-white rounded-lg hover:bg-blue-500 transition"
-          >
-            Update Profile
-          </button>
+          <h3 className="text-2xl font-bold mb-6 border-b-2 border-gray-600 pb-2">Admin Dashboard Information</h3>
+          <div className="grid grid-cols-2 gap-6">
+            {[
+              { label: "Total Rooms", value: data.totalRooms, color: "blue-400" },
+              { label: "Available Rooms (%)", value: `${data.availablePercentage}%`, color: "green-400" },
+              { label: "Unavailable Rooms (%)", value: `${data.unavailablePercentage}%`, color: "red-400" },
+              { label: "Users Without Role", value: data.usersWithoutRole, color: "yellow-400" },
+              { label: "Total Members", value: data.totalMembers, color: "purple-400", span: 2 },
+            ].map(({ label, value, color, span = 1 }, index) => (
+              <div key={index} className={`bg-gray-900 rounded-lg p-2 shadow-md col-span-${span}`}>
+                <h4 className={`text-xl font-semibold text-${color}`}>{label}</h4>
+                <p className="text-3xl font-bold mt-2 text-white">{value}</p>
+              </div>
+            ))}
+          </div>
         </motion.div>
-      </motion.div>
-
-      <motion.div
-        className="bg-gray-800 shadow-lg rounded-lg p-8 w-full max-w-4xl text-gray-300"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8, delay: 0.6 }}
-      >
-        <h3 className="text-2xl font-bold text-white mb-6 border-b-2 border-gray-600 pb-2">Admin Dashboard Information</h3>
-        <div className="grid grid-cols-2 gap-6">
-          <div className="bg-gray-900 rounded-lg p-4 shadow-md">
-            <h4 className="text-xl font-semibold text-blue-400">Total Rooms</h4>
-            <p className="text-3xl font-bold mt-2 text-white">{data.totalRooms}</p>
-          </div>
-          <div className="bg-gray-900 rounded-lg p-4 shadow-md">
-            <h4 className="text-xl font-semibold text-green-400">Available Rooms (%)</h4>
-            <p className="text-3xl font-bold mt-2 text-white">{data.availablePercentage}%</p>
-          </div>
-          <div className="bg-gray-900 rounded-lg p-4 shadow-md">
-            <h4 className="text-xl font-semibold text-red-400">Unavailable Rooms (%)</h4>
-            <p className="text-3xl font-bold mt-2 text-white">{data.unavailablePercentage}%</p>
-          </div>
-          <div className="bg-gray-900 rounded-lg p-4 shadow-md">
-            <h4 className="text-xl font-semibold text-yellow-400">Users Without Role</h4>
-            <p className="text-3xl font-bold mt-2 text-white">{data.usersWithoutRole}</p>
-          </div>
-          <div className="bg-gray-900 rounded-lg p-4 shadow-md col-span-2">
-            <h4 className="text-xl font-semibold text-purple-400">Total Members</h4>
-            <p className="text-3xl font-bold mt-2 text-white">{data.totalMembers}</p>
-          </div>
-        </div>
-      </motion.div>
+      </div>
 
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">

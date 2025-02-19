@@ -40,6 +40,28 @@ const Provider = ({ children }) => {
         return signOut(auth);
     }
 
+  // Update User Profile (Name, Phone, Photo URL)
+  const updateUserProfile = async (name, phone, photoURL) => {
+    if (!user) return;
+
+    setLoading(true);
+    try {
+      await updateProfile(user, {
+        displayName: name,
+        photoURL: photoURL,
+      });
+
+      // Update state with new user info
+      setUser({ ...user, displayName: name, phoneNumber: phone, photoURL });
+
+      console.log("User profile updated successfully!");
+    } catch (error) {
+      console.error("Error updating profile:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, currentUser => {
@@ -73,6 +95,7 @@ const Provider = ({ children }) => {
         logIn,
         signInWithGoogle,
         logOut,
+        updateProfile,
     }
 
     return (

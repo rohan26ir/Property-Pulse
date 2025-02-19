@@ -13,7 +13,7 @@ const DbNavbar = () => {
   const adminMenu = (
     <>
     <li>
-        <NavLink to="/dashboard" className={linkStyle}>
+        <NavLink to="/dashboard/info" className={linkStyle}>
           DashBoard
         </NavLink>
       </li>
@@ -48,7 +48,7 @@ const DbNavbar = () => {
   const userMenu = (
     <>
       <li>
-        <NavLink to="/dashboard" className={linkStyle}>
+        <NavLink to="/dashboard/info" className={linkStyle}>
           DashBoard
         </NavLink>
       </li>
@@ -68,7 +68,7 @@ const DbNavbar = () => {
   const memberMenu = (
     <>
     <li>
-        <NavLink to="/dashboard" className={linkStyle}>
+        <NavLink to="/dashboard/info" className={linkStyle}>
           DashBoard
         </NavLink>
       </li>

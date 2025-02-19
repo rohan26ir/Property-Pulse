@@ -21,7 +21,7 @@ const AboutBuilding = () => {
     <div className="">
       <div className="text-center mb-8">
         <h2 className="text-3xl font-bold">About The Building</h2>
-        <p className="text-gray-700">
+        <p className="text-black">
           Explore details about our apartments and find your perfect match!
         </p>
       </div>
@@ -38,7 +38,7 @@ const AboutBuilding = () => {
               className="w-full h-48 object-cover"
             />
             <div className="p-4 flex flex-col flex-grow">
-              <h3 className="text-xl font-bold text-blue-800">{building.name}</h3>
+              <h3 className="text-xl font-bold text-black">{building.name}</h3>
               <p className="text-gray-700 mt-2 flex-grow">{building.description}</p>
 
               <div className="mt-4 flex justify-center items-center border-2 rounded-lg border-gray-300 cursor-pointer hover:bg-gray-300"

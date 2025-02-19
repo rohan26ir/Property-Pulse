@@ -26,7 +26,7 @@ const Coupons = () => {
   }, [axiosSecure]);
 
   // Define color pattern
-  const colors = ["#FFD700", "#FF4500", "#1E90FF", "#32CD32"];
+  const colors = ["#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF"];
 
   // Function to copy coupon code and show toast
   const copyToClipboard = (couponCode) => {
@@ -46,7 +46,7 @@ const Coupons = () => {
     <div className="w-11/12 mx-auto py-10">
       <ToastContainer />
       <div className="flex flex-col items-center">
-        <div className="text-white mb-8 text-center">
+        <div className="text-black mb-8 text-center">
           <h2 className="text-3xl font-bold">Exclusive Building Coupons</h2>
           <p className="text-lg mt-2">
             Grab these amazing deals and save on your dream apartment!
@@ -75,16 +75,16 @@ const Coupons = () => {
                 }}
               >
                 <div className="text-center flex-grow">
-                  <h3 className="text-2xl font-bold text-white">
+                  <h3 className="text-2xl font-bold text-black">
                     {coupon.category}
                   </h3>
                   <div className="mt-4">
-                    <span className="text-4xl font-bold text-white">
+                    <span className="text-4xl font-bold text-black">
                       {coupon.discount}
                     </span>
-                    <span className="text-xl text-white"> OFF</span>
+                    <span className="text-xl text-black"> OFF</span>
                   </div>
-                  <p className="text-white mt-2 text-sm">
+                  <p className="text-black mt-2 text-sm">
                     {coupon.description}
                   </p>
                 </div>
@@ -96,7 +96,7 @@ const Coupons = () => {
                   </div>
                   <button
                     onClick={() => copyToClipboard(coupon.couponCode)}
-                    className="w-full px-4 py-2 mt-4 bg-white text-[#1E1D85] font-semibold rounded-lg hover:bg-gray-200"
+                    className="w-full px-4 py-2 mt-4 border-2 text-black font-semibold rounded-lg hover:bg-gray-200"
                   >
                     Copy Coupon
                   </button>

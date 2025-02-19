@@ -39,7 +39,7 @@ const WhatWeOffer = () => {
             
             <div key={data.id}  className='bg-white h-60 shadow-lg p-4 rounded-lg flex flex-col justify-center items-center'>
               <div className='text-4xl flex justify-center items-center text-gray-900 my-4'>
-                <p className='h-20 w-20 bg-blue-400 flex justify-center items-center rounded-full '>{data.icon}</p>
+                <p className='h-20 w-20 bg-gray-600 text-white flex justify-center items-center rounded-full '>{data.icon}</p>
               </div>
               <h2 className='text-center'>{data.title}</h2>
             </div>

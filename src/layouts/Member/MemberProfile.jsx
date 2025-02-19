@@ -29,16 +29,16 @@ const MemberProfile = () => {
   };
 
   return (
-    <div className="flex items-center justify-center w-full py-10">
+    <div className="flex items-center justify-center w-full py-10 bg-gray-100 h-screen">
       <motion.div
-        className="py-10 px-6 flex flex-row gap-5 items-center bg-[#111827] shadow-lg rounded-lg w-full max-w-4xl"
+        className="py-10 px-6 flex flex-row justify-center gap-20 items-center bg-white shadow-lg rounded-lg w-full max-w-4xl"
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.6, ease: "easeInOut" }}
       >
         {/* Profile Image */}
         <motion.div
-          className="flex-shrink-0"
+          className="flex-shrink-0  "
           initial={{ scale: 0.8 }}
           animate={{ scale: 1 }}
           transition={{ duration: 0.6, ease: "easeInOut" }}
@@ -57,29 +57,29 @@ const MemberProfile = () => {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.3 }}
         >
-          <h2 className="text-2xl font-bold text-gray-300">{displayName || "User Name"}</h2>
-          <p className="text-gray-400">Email: {email}</p>
-          <p className="text-gray-400">Phone: {phoneNumber || "N/A"}</p>
-          <p className="text-gray-400">
+          <h2 className="text-2xl font-bold ">{displayName || "User Name"}</h2>
+          <p className="">Email: {email}</p>
+          <p className="">Phone: {phoneNumber || "N/A"}</p>
+          <p className="">
             Email Verified:{" "}
-            <span className={emailVerified ? "text-green-400" : "text-red-400"}>
+            <span className={emailVerified ? "text-gray-400" : "text-red-400"}>
               {emailVerified ? "Yes" : "No"}
             </span>
           </p>
-          <p className="text-gray-400">
+          <p className="">
             Location:{" "}
-            <span className={emailVerified ? "text-green-400" : "text-red-400"}>
+            <span className={emailVerified ? "text-gray-400" : "text-red-400"}>
               {location ? "N/A" : ""}
             </span>
           </p>
           
-          <p className="text-gray-400">Created At: {metadata?.creationTime ? new Date(metadata.creationTime).toLocaleString() : "N/A"}</p>
-          <p className="text-gray-400">Last Sign-In: {metadata?.lastSignInTime ? new Date(metadata.lastSignInTime).toLocaleString() : "N/A"}</p>
+          <p className="">Created At: {metadata?.creationTime ? new Date(metadata.creationTime).toLocaleString() : "N/A"}</p>
+          <p className="">Last Sign-In: {metadata?.lastSignInTime ? new Date(metadata.lastSignInTime).toLocaleString() : "N/A"}</p>
 
           {/* Update Profile Button */}
           <button
             onClick={() => setIsModalOpen(true)}
-            className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
+            className="mt-4 px-4 py-2 border-2 rounded-lg hover:bg-gray-300 transition"
           >
             Update Profile
           </button>

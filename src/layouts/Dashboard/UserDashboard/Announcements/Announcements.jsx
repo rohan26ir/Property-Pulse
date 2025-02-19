@@ -49,7 +49,8 @@ const Announcements = () => {
     );
 
   return (
-    <motion.div
+    <div className='bg-gray-100 py-5'>
+      <motion.div
       className="p-6 max-w-3xl mx-auto bg-white shadow-lg rounded-lg"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -91,6 +92,7 @@ const Announcements = () => {
         </motion.ul>
       )}
     </motion.div>
+    </div>
   );
 };
 

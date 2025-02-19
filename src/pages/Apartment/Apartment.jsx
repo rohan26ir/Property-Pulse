@@ -170,7 +170,7 @@ const Apartment = () => {
        <p>Rent: ${apartment.rent}</p>
        <button
          onClick={() => handleAgreement(apartment)}
-         className="btn bg-green-600 text-white mt-4 hover:bg-green-700"
+         className="btn bg-gray-600 text-white mt-4 hover:bg-gray-800 "
        >
          Make Agreement
        </button>

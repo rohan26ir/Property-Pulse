@@ -24,6 +24,7 @@ import PaymentHistory from "../pages/Payments/PaymentHistory";
 import AboutUs from "../pages/AboutUs/AboutUs";
 import ContactUs from "../pages/ContactUs/ContactUs";
 import Services from "../pages/Services/Services";
+import DashboardInfo from "../pages/DashboardInfo/DashBordInfo";
 
 const Router = createBrowserRouter([
   {
@@ -67,6 +68,10 @@ const Router = createBrowserRouter([
     errorElement: <Error></Error>,
     children: [ 
       
+      {
+        path: '/dashboard',
+        element: <DashboardInfo></DashboardInfo>
+      },
       {
         path: '/dashboard/my-profile',
         element: <MyProfile></MyProfile>

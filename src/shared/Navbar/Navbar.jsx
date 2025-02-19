@@ -111,11 +111,11 @@ const Navbar = () => {
                   <Link
                     to={
                       role === "Manager"
-                        ? "/dashboard/admin-profile" // Redirect to the admin profile if the role is "Manager"
+                        ? "/dashboard" // Redirect to the admin profile if the role is "Manager"
                         : role === "Resident"
-                        ? "/dashboard/member-profile" // Redirect to the member profile if the role is "Tenant"
+                        ? "/dashboard" // Redirect to the member profile if the role is "Tenant"
                         : role === "Tenant"
-                        ? "/dashboard/my-profile" // Redirect to the my profile if the role is "Resident"
+                        ? "/dashboard" // Redirect to the my profile if the role is "Resident"
                         : "/"
                     }
                   >

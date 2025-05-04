@@ -25,6 +25,7 @@ import AboutUs from "../pages/AboutUs/AboutUs";
 import ContactUs from "../pages/ContactUs/ContactUs";
 import Services from "../pages/Services/Services";
 import DashboardInfo from "../pages/DashboardInfo/DashBordInfo";
+import PayRent from "../pages/Payments/PayRent";
 
 const Router = createBrowserRouter([
   {
@@ -93,7 +94,11 @@ const Router = createBrowserRouter([
         element: <PrivateRoute><Payment></Payment> </PrivateRoute>
       },
       {
-        path: "/dashboard/oayment-history",
+        path: "/dashboard/pay-rent",
+        element: <PrivateRoute><PayRent></PayRent> </PrivateRoute>
+      },
+      {
+        path: "/dashboard/payment-history",
         element: <PrivateRoute><PaymentHistory></PaymentHistory></PrivateRoute>
       },
       {

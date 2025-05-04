@@ -1,158 +1,122 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import useAuth from '../../hooks/useAuth';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const MakePayment = () => {
   const [agreements, setAgreements] = useState([]);
-  const [selectedAgreement, setSelectedAgreement] = useState(null);
-  const [selectedMonth, setSelectedMonth] = useState("");
-  const [adjustedRent, setAdjustedRent] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
   const axiosSecure = useAxiosSecure();
-  const navigate = useNavigate();
+  const { user, loading } = useAuth();
 
-  // Fetch agreements data
+  // Fetch agreements data and filter by user email and unpaid status
   useEffect(() => {
     const fetchAgreements = async () => {
-      const { data } = await axiosSecure.get("/agreements");
-      setAgreements(data);
-      setSelectedAgreement(data[0]); // Default to the first agreement
-      setAdjustedRent(data[0]?.rent || 0); // Default rent
+      if (!user?.email) return;
+      setIsLoading(true);
+      try {
+        const { data } = await axiosSecure.get('/agreements');
+        const filteredAgreements = data.filter(
+          (agreement) =>
+            agreement.userEmail === user.email &&
+            agreement.rent > 0 &&
+            agreement.status !== 'paid' // Exclude paid agreements
+        );
+        setAgreements(filteredAgreements);
+      } catch (error) {
+        console.error('Error fetching agreements:', error);
+        Swal.fire('Error', 'Failed to load agreements. Please try again.', 'error');
+      } finally {
+        setIsLoading(false);
+      }
     };
     fetchAgreements();
-  }, [axiosSecure]);
+  }, [axiosSecure, user]);
 
-  const handleMonthChange = (e) => {
-    const month = e.target.value;
-    setSelectedMonth(month);
+  // Calculate total payment for all agreements
+  const totalPayment = agreements.reduce((sum, agreement) => sum + (agreement.rent || 0), 0);
 
-    // Adjust rent logic for the selected month if needed
-    if (selectedAgreement) {
-      setAdjustedRent(selectedAgreement.rent); // Reset rent for the selected month
-    }
-  };
+  // Extract all apartmentNo values from agreements
+  const apartmentNos = agreements.map((agreement) => agreement.apartmentNo);
 
-  const handlePayment = () => {
-    if (!selectedMonth) {
-      Swal.fire("Error", "Please select a month to proceed", "error");
-      return;
-    }
-    navigate("/payment", {
-      state: { ...selectedAgreement, rent: adjustedRent, month: selectedMonth },
-    });
-  };
+  if (!user) {
+    return (
+      <div className="text-center p-6">
+        <h3 className="text-2xl font-semibold mb-4">Please Log In</h3>
+        <p className="text-gray-600">You need to log in to view your agreements.</p>
+        <Link to="/login" className="btn btn-primary mt-4">
+          Log In
+        </Link>
+      </div>
+    );
+  }
 
-  if (!agreements.length) return <div>Loading...</div>;
+  if (isLoading) {
+    return (
+      <div className="text-center p-6">
+        <span className="loading loading-spinner loading-lg"></span>
+        <p className="text-gray-600 mt-2">Loading agreements...</p>
+      </div>
+    );
+  }
 
-  const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
+  if (!agreements.length) {
+    return (
+      <div className="text-center p-6 bg-white rounded-lg shadow-md max-w-md mx-auto">
+        <h3 className="text-2xl font-semibold mb-4">No Payments Due</h3>
+        <p className="text-gray-600 mb-6">
+          You have no unpaid agreements at this time. Explore available apartments to find your next home!
+        </p>
+        <Link to="/apartment" className="btn btn-primary">
+          Browse Apartments
+        </Link>
+      </div>
+    );
+  }
 
   return (
-    <div className="w-full max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold text-center mb-6">Make Payment</h2>
-      <div className="mb-4">
-        <label className="block font-semibold">Select Agreement</label>
-        <select
-          value={selectedAgreement?._id}
-          onChange={(e) => {
-            const agreement = agreements.find((a) => a._id === e.target.value);
-            setSelectedAgreement(agreement);
-            setAdjustedRent(agreement.rent); // Reset rent for the newly selected agreement
-          }}
-          className="w-full px-4 py-2 border rounded-lg"
-        >
-          {agreements.map((agreement) => (
-            <option key={agreement._id} value={agreement._id}>
-              {`${agreement.blockName} Block - Apartment ${agreement.apartmentNo}`}
-            </option>
-          ))}
-        </select>
-      </div>
-      {selectedAgreement && (
-        <>
-          <div className="mb-4">
-            <label className="block font-semibold">Member Email</label>
-            <input
-              type="text"
-              value={selectedAgreement.userEmail}
-              readOnly
-              className="w-full px-4 py-2 border rounded-lg text-red-600 bg-gray-100"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block font-semibold">Floor</label>
-            <input
-              type="text"
-              value={selectedAgreement.floorNo}
-              readOnly
-              className="w-full px-4 py-2 border rounded-lg bg-gray-100"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block font-semibold">Block Name</label>
-            <input
-              type="text"
-              value={selectedAgreement.blockName}
-              readOnly
-              className="w-full px-4 py-2 border rounded-lg bg-gray-100"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block font-semibold">Apartment/Room No</label>
-            <input
-              type="text"
-              value={selectedAgreement.apartmentNo}
-              readOnly
-              className="w-full px-4 py-2 border rounded-lg bg-gray-100"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block font-semibold">Rent</label>
-            <input
-              type="text"
-              value={`$${adjustedRent.toFixed(2)}`}
-              readOnly
-              className="w-full px-4 py-2 border rounded-lg bg-gray-100"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block font-semibold">Month</label>
-            <select
-              value={selectedMonth}
-              onChange={handleMonthChange}
-              className="w-full px-4 py-2 border rounded-lg"
-            >
-              <option value="" disabled>
-                Select a month
-              </option>
-              {months.map((month) => (
-                <option key={month} value={month}>
-                  {month}
-                </option>
-              ))}
-            </select>
-          </div>
-          <button
-            type="button"
-            onClick={handlePayment}
-            className="w-full py-2 mt-4 bg-green-500 text-white font-semibold rounded-lg"
-          >
-            Pay ${adjustedRent.toFixed(2)}
+    <div>
+      <div className="flex justify-evenly mb-8">
+        <h2 className="text-4xl">Agreements: {agreements.length}</h2>
+        <h2 className="text-4xl">Total Payment: ${totalPayment.toFixed(2)}</h2>
+        {agreements.length ? (
+          <Link to="/dashboard/pay-rent" state={{ totalPayment, apartmentNos }}>
+            <button className="btn btn-primary">Pay</button>
+          </Link>
+        ) : (
+          <button disabled className="btn btn-primary">
+            Pay
           </button>
-        </>
-      )}
+        )}
+      </div>
+      <div className="overflow-x-auto">
+        <table className="table w-full">
+          {/* head */}
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Block Name</th>
+              <th>Apartment No</th>
+              <th>Floor</th>
+              <th>Member Email</th>
+              <th>Rent</th>
+            </tr>
+          </thead>
+          <tbody>
+            {agreements.map((agreement, index) => (
+              <tr key={agreement._id}>
+                <th>{index + 1}</th>
+                <td>{agreement.blockName}</td>
+                <td>{agreement.apartmentNo}</td>
+                <td>{agreement.floorNo}</td>
+                <td className="text-red-600">{agreement.userEmail}</td>
+                <td>${agreement.rent.toFixed(2)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

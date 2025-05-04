@@ -1,5 +1,4 @@
 import React from 'react';
-// Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 // Import Swiper styles
@@ -82,7 +81,7 @@ const Hero = () => {
           pagination={{
             clickable: true,
           }}
-          navigation={true}
+          // navigation={true}
           modules={[Autoplay, Pagination, Navigation]}
           className="mySwiper"
         >
@@ -94,8 +93,9 @@ const Hero = () => {
                   alt={data.title}
                   className="w-full h-[200px] md:h-[400px] object-cover "
                 />
-                <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-50 text-white px-6 py-4 rounded-md">
-                  
+                <div className="absolute bottom-2 left-60 transform -translate-x-1/2 bg-black bg-opacity-50 text-white w-[35%] px-6 py-4 rounded-md">
+                  <h2 className='text-2xl font-bold'>{data.title}</h2>
+                  <p>{data.description}</p>
                 </div>
               </div>
             </SwiperSlide>

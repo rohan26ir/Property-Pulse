@@ -1,11 +1,49 @@
 import React from 'react';
 import conImg from "../../assets/contactus.svg"
+import Swal from 'sweetalert2';
 
 const ContactUs = () => {
 
   const handleForm = (e) =>{
-
     e.preventDefault()
+
+    const form = e.target;
+    const name = form.name.value;
+    const email = form.email.value;
+    const message = form.message.value;
+
+    const formData = {
+      name,
+      email,
+      message
+    }
+    console.log(formData)
+    form.reset()
+
+    // notify the user that the message has been sent
+    // Swal.fire({
+    //   title: 'Message Sent!',
+    //   text: `Thank you, ${name}, your message has been sent successfully!`,
+    //   icon: 'success',
+    //   showConfirmButton: false,
+    //   timer: 1500,
+    // })
+
+    Swal.mixin({
+      toast: true,
+      position: 'top-right',
+      showConfirmButton: false,
+      timer: 1500,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    }).fire({
+      icon: 'success',
+      title: `Thank you, ${name}, your message has been sent!`
+    });
+    
   }
 
   return (
@@ -16,29 +54,35 @@ const ContactUs = () => {
         <div className="md:w-1/2 p-4">
           <h1 className="text-3xl font-bold text-gray-800 mb-2">Contact Us</h1>
           <p className="text-gray-600 mb-6">Have any questions? Reach out to us through the form below or via our contact details.</p>
-          <form className="space-y-4"  onClick={handleForm}>
+          <form className="space-y-4"  onSubmit={handleForm}>
             <div>
               <label className="block text-gray-700 font-medium mb-1">Name</label>
               <input 
                 type="text" 
+                name='name'
                 placeholder="Enter your name" 
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
               />
             </div>
             <div>
               <label className="block text-gray-700 font-medium mb-1">Email</label>
               <input 
                 type="email" 
+                name='email'
                 placeholder="Enter your email" 
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
               />
             </div>
             <div>
               <label className="block text-gray-700 font-medium mb-1">Message</label>
               <textarea 
                 rows="4" 
+                name='message'
                 placeholder="Enter your message" 
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
               ></textarea>
             </div>
             <button 

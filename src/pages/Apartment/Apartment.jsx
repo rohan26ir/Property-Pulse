@@ -17,6 +17,7 @@ const Apartment = () => {
   const axiosPublic = useAxiosPublic();
   const apartmentsPerPage = 6;
 
+  
   // Fetch apartments from the server
   const fetchApartments = async () => {
     setLoading(true);

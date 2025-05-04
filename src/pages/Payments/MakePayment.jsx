@@ -21,6 +21,7 @@ const MakePayment = () => {
           (agreement) =>
             agreement.userEmail === user.email &&
             agreement.rent > 0 &&
+            agreement.status === 'accepted' &&
             agreement.status !== 'paid' // Exclude paid agreements
         );
         setAgreements(filteredAgreements);
